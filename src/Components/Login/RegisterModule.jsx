@@ -89,7 +89,7 @@ class RegistrationForm extends React.Component {
                     )}
                 >
                     {getFieldDecorator('nickname', {
-                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+                        rules: [{ required: true, message: 'Please input your truly name!', whitespace: true }],
                     })(
                         <Input />
                     )}
@@ -175,7 +175,7 @@ class RegistrationForm extends React.Component {
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">注册</Button>
+                    <Button type="primary" htmlType="submit" style={{width: "50%"}}>注册</Button>
                 </FormItem>
             </Form>
         );
