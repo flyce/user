@@ -1,0 +1,6 @@
+.list p{
+    text-align: center;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
