@@ -1,7 +1,9 @@
 import React from 'react';
-import { Card, Switch, Icon, Row  } from 'antd';
-import { getItem } from "../../Utils/storage";
-import { get } from "../../Utils/fetch";
+import { Card, Switch, Row  } from 'antd';
+import { get, post } from "../../Utils/fetch";
+import LoginVerify from '../LoginVerify';
+
+import './style.css';
 
 class SubscribeManage extends React.PureComponent {
     state = {
@@ -9,13 +11,16 @@ class SubscribeManage extends React.PureComponent {
         isLoading: true
     };
 
-    componentDidMount = () => {
-        const _id = getItem("_id");
-        get('user/info', {_id}).then(
+    componentDidMount() {
+        get('user/info').then(
             (info) => {
                 if (info) {
                     this.setState({
-                        info: info,
+                        mail: info.mail,
+                        receivedcad: info.receivedcad,
+                        receivedad: info.receivedad,
+                        subscribe: info.subscribe,
+                        subscribeExpireTime: info.subscribeExpireTime,
                         isLoading: false,
                     });
                 } else {
@@ -24,13 +29,38 @@ class SubscribeManage extends React.PureComponent {
 
             }
         );
-    };
+    }
+
+    handleChangeCad() {
+        const { receivedcad } = this.state;
+        this.setState({
+            receivedcad: !receivedcad
+        });
+        post('user/info', {
+            receivedcad: !receivedcad
+        }).then((result) => {
+            console.log(result);
+        })
+    }
+
+    handleChangeAd() {
+        const { receivedad } = this.state;
+        this.setState({
+            receivedad: !receivedad
+        });
+        post('user/info', {
+            receivedad: !receivedad
+        }).then((result) => {
+            console.log(result);
+        })
+    }
 
     render () {
+        const { mail, receivedcad, receivedad } = this.state;
         return (
             <Card bordered={false}>
+                <LoginVerify/>
                 <div>
-                    <h3 style={{ marginBottom: 16 }}>订阅信息</h3>
                     <div className="list">
                         <Row>
                             <p>
@@ -41,19 +71,33 @@ class SubscribeManage extends React.PureComponent {
                         <Row>
                             <p>
                                 <span>邮箱:</span>
-                                <span>mail@flyce.cn<Icon type="edit" /></span>
+                                <span>{mail}</span>
                             </p>
                         </Row>
                         <Row>
                             <p>
                                 <span>CAD订阅:</span>
-                                <span><Switch defaultChecked/></span>
+                                <span>
+                                    <Switch
+                                        checked={receivedcad}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeCad.bind(this)}
+                                    />
+                                </span>
                             </p>
                         </Row>
                         <Row>
                             <p>
                                 <span>AD订阅:</span>
-                                <span><Switch disabled={true} /></span>
+                                <span>
+                                    <Switch
+                                        checked={receivedad}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeAd.bind(this)}
+                                    />
+                                </span>
                             </p>
                         </Row>
                     </div>

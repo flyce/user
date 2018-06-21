@@ -6,7 +6,7 @@ import Register from "../Pages/Register";
 import Header from "../Components/Header";
 import Admin from "../Pages/Admin";
 import User from '../Pages/User';
-import Logout from '../Components/Logout';
+import Logout from '../Pages/Logout';
 import Layout from '../Components/Layout';
 
 class RouterIndex extends Component {
@@ -23,6 +23,7 @@ class RouterIndex extends Component {
                     <Route path='/admin/:path' component={Admin}/>
                     <Route path="/user/:path" component={User}/>
                     <Route path="/logout" component={Logout}/>
+                    <Route path="/user" component={User}/>
                     <Route component={NoMatch}/>
                 </Switch>
             </Router>
@@ -38,20 +39,8 @@ const About = () => (
 
 const List = () => (
     <div>
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-            <li>
-                <Link to="/about">About</Link>
-            </li>
-            <li>
-                <Link to="/login">Login</Link>
-            </li>
-            <li>
-                <Link to="/head">head</Link>
-            </li>
-        </ul>
+        <h1>主页开发中...</h1>
+        <Link to="/login">点击登录</Link>
     </div>
 );
 

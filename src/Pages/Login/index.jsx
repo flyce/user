@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import "./index.css"
 import { Form, Input, Row, Button, Icon, Tooltip } from "antd/lib/index";
 import { post } from '../../Utils/fetch';
-import { setItem, getItem } from "../../Utils/storage";
+import {setItem, getItem, removeItem} from "../../Utils/storage";
 import history from '../../Router/history';
+import logo from '../../assets/logo.svg';
+import config from "../../Config/env";
 
 const FormItem = Form.Item;
 
@@ -16,6 +18,24 @@ class NLoginForm extends Component {
             username:'',
             password:'',
             submitButtonDisabled: true
+        }
+    }
+
+    componentDidMount() {
+        const loginTime = getItem("loginTime");
+        const admin = getItem("admin");
+
+        if (Math.floor(Date.now()/1000) - loginTime > config.loginEffect) {
+            removeItem("token");
+            removeItem("username");
+            removeItem("_id");
+            removeItem("loginTime");
+        } else {
+            if (admin) {
+                history.push("admin/user");
+            } else {
+                history.push("user/info")
+            }
         }
     }
 
@@ -60,16 +80,22 @@ class NLoginForm extends Component {
             {
                 "username": this.state.username,
                 "password": this.state.password
-            }).then(
+            }, false).then(
                 (response) => {
+                    console.log(response);
                     if (response.success) {
                         setItem("token", response.token);
                         setItem("username", this.state.username);
                         setItem("_id", response._id);
+                        setItem("admin", response.admin);
                         setItem("loginTime", Math.floor(Date.now()/1000));
                         const token = getItem("token");
                         if (token.length > 0) {
-                            history.push('/');
+                            if (response.admin) {
+                                history.push("admin/user");
+                            } else {
+                                history.push("user/info")
+                            }
                         }
                     } else {
                         console.log(response);
@@ -83,8 +109,8 @@ class NLoginForm extends Component {
 
         return (
             <div className="form">
-                <div className="logo">
-                    <img alt="logo" src="#" />
+                <div className="loginlogo">
+                    <img alt="logo" src={logo} />
                     <span>Iris Studio</span>
                 </div>
                 <form>

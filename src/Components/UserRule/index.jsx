@@ -1,7 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Card, Button, Dropdown, Icon, Menu, Row, Col, Select, Form, Input, Table, Badge, Divider, Modal, } from 'antd';
+import { Card, Button, Row, Col, Select, Form, Input, Table, Modal, } from 'antd';
 import './style.css'
-import { Link } from 'react-router-dom';
+import LoginVerify from '../LoginVerify';
+import {get, post} from '../../Utils/fetch';
 const FormItem = Form.Item;
 const { Option } = Select;
 
@@ -39,16 +40,8 @@ const CreateForm = Form.create()(props => {
 class UserRule extends PureComponent {
     state = {
         modalVisible: false,
-        data: [
-            {
-                _id: '1111',
-                rule: "B737",
-                description: "这是一段描述",
-                callNo: "11",
-                status: "运行中",
-                updatedAt: Date.now(),
-            }
-        ]
+        data: [],
+        isLoading: true
     };
 
     handleModalVisible = (flag) => {
@@ -59,18 +52,44 @@ class UserRule extends PureComponent {
 
     handleAdd = data => {
         const arr = this.state.data;
-        data.callNo = 11;
-        data.status = "运行中";
+        data.status = true;
         data.updatedAt = Date.now();
-        data._id = Math.random() * 10;
-        arr.push(data);
-        this.setState ({
-            data: arr
+        let existFlag = false;
+        arr.map((value) => {
+            if (data.rule === value.rule) {
+                existFlag = true;
+            }
+            return 0;
         });
+        if (!existFlag) {
+            arr.push(data);
+            this.setState ({
+                data: arr
+            });
+            console.log(data);
+            post('user/rule', data).then((response) => {
+                console.log(response);
+            });
+        } else {
+            console.log(`rule: ${data.rule} 已存在！`);
+        }
     };
 
+    componentDidMount() {
+        get('user/rule').then((res) => {
+            console.log(res);
+            this.setState({
+                data: res,
+                isLoading: false
+            });
+        })
+    }
+
     handleRemove = value => {
-        const data = this.state.data.filter(res => res.rule != value.rule)
+        post('user/rule/delete', value).then((res) => {
+           console.log(res);
+        });
+        const data = this.state.data.filter(res => res.rule !== value.rule);
         this.setState({
             data
         });
@@ -91,22 +110,25 @@ class UserRule extends PureComponent {
             {
                 title: '状态',
                 dataIndex: 'status',
-                key: 'status'
+                key: 'status',
+                render: val => {
+                    return val ? <span>运行中</span> : <span>关闭</span>
+                }
             },
             {
                 title: '创建时间',
                 dataIndex: 'updatedAt',
                 key: 'updatedAt',
                 sorter: true,
-                render: val => <span>{val}</span>,
+                render: val => <span>{new Date(val).toLocaleString('zh-CN',{hour12:false})}</span>,
             },
             {
                 title: '操作',
-                render: (vaule) => (
+                render: (value) => (
                     <Fragment>
                         {/*<Button onClick={() => {console.log(vaule)}}>停用</Button>*/}
                         {/*<Divider type="vertical" />*/}
-                        <Button onClick={() => {this.handleRemove(vaule)}}>删除</Button>
+                        <Button onClick={() => {this.handleRemove(value)}}>删除</Button>
                     </Fragment>
                 ),
             },
@@ -117,16 +139,22 @@ class UserRule extends PureComponent {
             handleModalVisible: this.handleModalVisible,
         };
 
+        if (this.state.isLoading) {
+            return (
+                <div>Loading</div>
+            );
+        }
 
         return (
             <div>
+                <LoginVerify/>
                 <Card bordered={false}>
                     <div className={"tableList"}>
                         <div className={"tableListForm"}>
                             <Form  layout="inline">
                                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                                     <Col md={8} sm={24}>
-                                        <FormItem label="规则编号">
+                                        <FormItem label="规则">
                                             <Input placeholder="请输入" />
                                         </FormItem>
                                     </Col>

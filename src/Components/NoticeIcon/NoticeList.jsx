@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, List } from 'antd';
 import classNames from 'classnames';
-import styles from './NoticeList.less';
+// import styles from './NoticeList.less';
 import './NoticeList.css';
 
 export default function NoticeList({
@@ -26,8 +26,8 @@ export default function NoticeList({
         <div>
             <List className={"list"}>
                 {data.map((item, i) => {
-                    const itemCls = classNames(styles.item, {
-                        ["read"]: item.read,
+                    const itemCls = classNames("item", {
+                        // ["read"]: item.read,
                     });
                     return (
                         <List.Item className={itemCls} key={item.key || i} onClick={() => onClick(item)}>

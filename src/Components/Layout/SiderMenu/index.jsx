@@ -6,9 +6,10 @@ import './style.css';
 const { Sider } = Layout;
 
 class SiderMenu extends PureComponent {
-    componentDidMount() {
-        console.log(this.props);
-    }
+    state = {
+        modalVisible: false,
+    };
+
     render() {
         const { logo, collapsed, onCollapse } = this.props;
         return (
@@ -25,25 +26,24 @@ class SiderMenu extends PureComponent {
                     <div className="logo" key="logo">
                         <Link to="/">
                             <img src={logo} alt="logo" />
-                            <h1>Ant Design Pro</h1>
+                            <h1>IRIS STUDIO</h1>
                         </Link>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1">
-                            <Icon type="user" />
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.path]}>
+                        <Menu.Item key="info">
+                            <Icon type="desktop" />
                             <span className="nav-text">订阅管理</span>
+                            <Link to={"info"}/>
                         </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span className="nav-text">信息维护</span>
+                        <Menu.Item key="rule">
+                            <Icon type="appstore-o" />
+                            <span className="nav-text">规则管理</span>
+                            <Link to={"rule"}/>
                         </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span className="nav-text">nav 3</span>
-                        </Menu.Item>
-                        <Menu.Item key="4">
+                        <Menu.Item key="center">
                             <Icon type="user" />
-                            <span className="nav-text">nav 4</span>
+                            <span className="nav-text">个人中心</span>
+                            <Link to={"center"}/>
                         </Menu.Item>
                     </Menu>
                 </Sider>

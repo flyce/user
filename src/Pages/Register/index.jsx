@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./index.css";
 import { Form, Input, Row, Button, Icon} from "antd/lib/index";
+import logo from '../../assets/logo.svg';
 
 const FormItem = Form.Item;
 
@@ -11,8 +12,8 @@ class NRegisterForm extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="regform">
-                <div className="logo">
-                    <img alt="logo" src="#" />
+                <div className="loginlogo">
+                    <img alt="logo" src={logo} />
                     <span>Iris Studio</span>
                 </div>
                 <form>

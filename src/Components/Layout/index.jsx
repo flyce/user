@@ -1,15 +1,11 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { Layout, Icon, message, Menu } from 'antd';
-import classNames from 'classnames';
+import { Layout, Icon } from 'antd';
 import GlobalHeader from './GlobalHeader';
 import GlobalFooter from './GlobalFooter';
 import SiderMenu from './SiderMenu';
 import logo from '../../assets/logo.svg';
-import UserRule from "../UserRule";
-import SubscribeManage from "../SubscribeManage";
 
-const { Content, Header, Footer, Sider } = Layout;
+const { Content, Header, Footer } = Layout;
 
 class BasicLayout extends React.Component {
     constructor(props) {
@@ -26,29 +22,27 @@ class BasicLayout extends React.Component {
         });
     };
 
-    componentDidMount() {
-    }
     render() {
-        let { collapsed } = this.state;
+        const { collapsed } = this.state;
+        const { path } = this.props;
         return (
             <Layout>
                 <SiderMenu
                     collapsed={collapsed}
                     onCollapse={this.onCollapse.bind(this)}
                     logo={logo}
+                    path={path}
                 />
                 <Layout>
                     <Header style={{ padding: 0 }}>
                         <GlobalHeader
                             logo={logo}
-                            currentUser={'Echo'}
                             collapsed={collapsed}
                             onCollapse={this.onCollapse.bind(this)}
                         />
                     </Header>
                     <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-                        {/*<UserRule/>*/}
-                        <SubscribeManage />
+                        {this.props.content}
                     </Content>
                     <Footer style={{ padding: 0 }}>
                         <GlobalFooter

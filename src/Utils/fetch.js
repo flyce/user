@@ -1,22 +1,38 @@
 import config from '../Config/env';
+import { getItem } from "./storage";
 
-export function get(url, headers) {
+export function get(url, containUserInfo = true) {
+    let headers;
+    if(containUserInfo) {
+        const auth = getItem("token");
+        const _id = getItem("_id");
+        headers = {
+            auth,
+            _id,
+            'Content-Type': 'application/json'
+        }
+    } else {
+        headers = {
+            'Content-Type': 'application/json'
+        }
+    }
     const result = fetch(config.url + url, {
-        headers: headers
+        headers
     }).then(function (response) {
         return response.json();
     });
     return result;
 }
 
-export function post(url, json, header) {
-    console.log(header);
+export function post(url, json, containUserInfo = true) {
     let headers;
-    if (header !== undefined) {
+    if(containUserInfo) {
+        const auth = getItem("token");
+        const _id = getItem("_id");
         headers = {
-                'auth': header.token,
-                '_id': header._id,
-                'Content-Type': 'application/json'
+            auth,
+            _id,
+            'Content-Type': 'application/json'
         }
     } else {
         headers = {

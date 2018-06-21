@@ -12,20 +12,21 @@
 }
 
 
-.logo {
-    height: 64px;
-    line-height: 58px;
-    vertical-align: top;
-    display: inline-block;
-    padding: 0 0 0 24px;
-    cursor: pointer;
-    font-size: 20px;
-}
+/*.logo {*/
+    /*height: 64px;*/
+    /*line-height: 58px;*/
+    /*vertical-align: top;*/
+    /*display: inline-block;*/
+    /*padding: 0 0 0 24px;*/
+    /*cursor: pointer;*/
+    /*font-size: 20px;*/
+    /*background: #00152a;*/
+/*}*/
 
-.logo img {
-    display: inline-block;
-    vertical-align: middle;
-}
+/*.logo img {*/
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+/*}*/
 
 .menu :global(.anticon) {
     margin-right: 8px;
@@ -43,6 +44,7 @@
 }
 
 i.trigger :hover {
+    background: rgba(0,0,0,.45);
      /*background: @primary-1;*/
 }
 
@@ -80,7 +82,7 @@ i.trigger :hover {
 
 .right .account .avatar {
     margin: 20px 8px 20px 0;
-    /*color: @primary-color;*/
+    color: rgba(0,0,0,.45); /*@primary-color;*/
     background: rgba(255, 255, 255, 0.85);
     vertical-align: middle;
 }
