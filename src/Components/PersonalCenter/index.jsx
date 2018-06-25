@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input, Card } from 'antd';
+import { Form, Button, Input, Card, message } from 'antd';
 import LoginVerify from '../LoginVerify';
 import { post, get } from "../../Utils/fetch";
 
@@ -20,8 +20,9 @@ class PersonalCenter extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            username: "wangquanfeng",
-            name: "王全峰",
+            isLoading: true,
+            username: "Echo",
+            name: "WQF",
             company: "Iris Studio",
             position: "worker",
             phone: "1719222622",
@@ -32,15 +33,20 @@ class PersonalCenter extends React.PureComponent {
     componentDidMount() {
         get('user/info').then(
             res => {
-                const { username, name, company, position, phone, mail } = res;
-                this.setState({
-                    username,
-                    name,
-                    company,
-                    position,
-                    phone,
-                    mail
-                })
+                if(res.success) {
+                    const { username, name, company, position, phone, mail } = res;
+                    this.setState({
+                        username,
+                        name,
+                        company,
+                        position,
+                        phone,
+                        mail,
+                        isLoading: false
+                    })
+                } else {
+                    message.error(res.info);
+                }
             }
         )
     };
@@ -48,8 +54,12 @@ class PersonalCenter extends React.PureComponent {
     handleSubmit = () => {
         const { mail, phone } = this.state;
         post('user/info', {mail, phone}).then(
-            res => {
-              console.log(res);
+            response => {
+              if(response.success) {
+                  message.success(response.info);
+              } else {
+                  message.warning(response.info);
+              }
             }
         );
     };
@@ -67,6 +77,9 @@ class PersonalCenter extends React.PureComponent {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <div>Loading...</div>
+        }
         const { username, name, company, position, phone, mail } = this.state;
         return (
             <Card bordered={false}>

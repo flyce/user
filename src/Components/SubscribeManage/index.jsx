@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Switch, Row  } from 'antd';
+import { Card, Switch, Row, message  } from 'antd';
 import { get, post } from "../../Utils/fetch";
 import LoginVerify from '../LoginVerify';
 
@@ -13,18 +13,18 @@ class SubscribeManage extends React.PureComponent {
 
     componentDidMount() {
         get('user/info').then(
-            (info) => {
-                if (info) {
+            (response) => {
+                if (response.success) {
                     this.setState({
-                        mail: info.mail,
-                        receivedcad: info.receivedcad,
-                        receivedad: info.receivedad,
-                        subscribe: info.subscribe,
-                        subscribeExpireTime: info.subscribeExpireTime,
+                        mail: response.mail,
+                        receivedcad: response.receivedcad,
+                        receivedad: response.receivedad,
+                        subscribe: response.subscribe,
+                        subscribeExpireTime: response.subscribeExpireTime,
                         isLoading: false,
                     });
                 } else {
-                    console.log("something wrong")
+                    message.error(response.info);
                 }
 
             }
@@ -38,8 +38,12 @@ class SubscribeManage extends React.PureComponent {
         });
         post('user/info', {
             receivedcad: !receivedcad
-        }).then((result) => {
-            console.log(result);
+        }).then((response) => {
+            if(response.success) {
+                message.success(response.info);
+            } else {
+                message.error(response.info);
+            }
         })
     }
 
@@ -50,12 +54,19 @@ class SubscribeManage extends React.PureComponent {
         });
         post('user/info', {
             receivedad: !receivedad
-        }).then((result) => {
-            console.log(result);
-        })
+        }).then((response) => {
+            if(response.success) {
+                message.success(response.info);
+            } else {
+                message.error(response.info);
+            }
+        });
     }
 
     render () {
+        if(this.state.isLoading) {
+            return <div>Loading...</div>
+        }
         const { mail, receivedcad, receivedad } = this.state;
         return (
             <Card bordered={false}>
@@ -89,7 +100,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>AD订阅:</span>
+                                <span>EASA AD订阅:</span>
                                 <span>
                                     <Switch
                                         checked={receivedad}

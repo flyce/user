@@ -1,10 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Card, Button, Row, Col, Select, Form, Input, Table, Modal, } from 'antd';
+import { Card, Button, Row, Col, Form, Input, Table, Modal, message } from 'antd';
 import './style.css'
 import LoginVerify from '../LoginVerify';
 import {get, post} from '../../Utils/fetch';
 const FormItem = Form.Item;
-const { Option } = Select;
+// const { Option } = Select;
 
 const CreateForm = Form.create()(props => {
     const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -40,8 +40,14 @@ const CreateForm = Form.create()(props => {
 class UserRule extends PureComponent {
     state = {
         modalVisible: false,
-        data: [],
-        isLoading: true
+        isLoading: true,
+        data: [{
+            rule: "MULT",
+            status: true,
+            description: 'NG',
+            id: "5b1e729a8d7b920b3306251b",
+            updatedAt: '2018/6/21 15:41:09'
+        }],
     };
 
     handleModalVisible = (flag) => {
@@ -53,7 +59,7 @@ class UserRule extends PureComponent {
     handleAdd = data => {
         const arr = this.state.data;
         data.status = true;
-        data.updatedAt = Date.now();
+        data.updatedAt = new Date().toLocaleString('zh-CN', {hour12:false});
         let existFlag = false;
         arr.map((value) => {
             if (data.rule === value.rule) {
@@ -66,36 +72,53 @@ class UserRule extends PureComponent {
             this.setState ({
                 data: arr
             });
-            console.log(data);
-            post('user/rule', data).then((response) => {
-                console.log(response);
+            const rule = [...arr];
+            post('user/rule', {rule}).then((response) => {
+                if (response.success) {
+                    message.success(response.info);
+                } else {
+                    message.error(response.info);
+                }
             });
         } else {
-            console.log(`rule: ${data.rule} 已存在！`);
+            message.error(`rule: ${data.rule} 已存在！`);
         }
     };
 
+
     componentDidMount() {
         get('user/rule').then((res) => {
-            console.log(res);
-            this.setState({
-                data: res,
-                isLoading: false
-            });
+            if(res.success) {
+                this.setState({
+                    data: res.rule,
+                    isLoading: false
+                });
+            } else {
+                message.error(res.info);
+            }
         })
     }
 
     handleRemove = value => {
-        post('user/rule/delete', value).then((res) => {
-           console.log(res);
-        });
         const data = this.state.data.filter(res => res.rule !== value.rule);
         this.setState({
             data
         });
+        const rule = [...data];
+        post('user/rule', {rule}).then((response) => {
+            if (response.success) {
+                message.success(response.info);
+            } else {
+                message.error(response.info);
+            }
+        });
     };
 
     render () {
+        if (this.state.isLoading) {
+            return <div>Loading...</div>;
+        }
+
         const columns = [
             {
                 title: '规则',
@@ -120,7 +143,6 @@ class UserRule extends PureComponent {
                 dataIndex: 'updatedAt',
                 key: 'updatedAt',
                 sorter: true,
-                render: val => <span>{new Date(val).toLocaleString('zh-CN',{hour12:false})}</span>,
             },
             {
                 title: '操作',
@@ -153,31 +175,36 @@ class UserRule extends PureComponent {
                         <div className={"tableListForm"}>
                             <Form  layout="inline">
                                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                                    <Col md={8} sm={24}>
-                                        <FormItem label="规则">
-                                            <Input placeholder="请输入" />
-                                        </FormItem>
+                                    <Col>
+                                        {/*<FormItem label="规则">*/}
+                                            {/*<Input placeholder="请输入" />*/}
+                                        {/*</FormItem>*/}
+                                        使用说明：<br />该规则CAAC CAD和EASA AD通用，CAD匹配指令编号(CAD2018-B737-10)，
+                                        AD匹配Approval Holder / Type Designation（BOEING 737），
+                                        如果在标题中匹配到关键词，则发送邮件到您预留的邮箱。
+                                        为了达到更好的效果，建议只输入最小关键词。
+                                        例如BOEING 737建议设置匹配关键词为737；AIRBUS A320建议设置关键词为320。<br />
                                     </Col>
-                                    <Col md={8} sm={24}>
-                                        <FormItem label="使用状态">
+                                    {/*<Col md={8} sm={24}>*/}
+                                        {/*<FormItem label="使用状态">*/}
 
-                                            <Select placeholder="请选择" style={{ width: '100%' }}>
-                                                <Option value="0">关闭</Option>
-                                                <Option value="1">运行中</Option>
-                                            </Select>
+                                            {/*<Select placeholder="请选择" style={{ width: '100%' }}>*/}
+                                                {/*<Option value="0">关闭</Option>*/}
+                                                {/*<Option value="1">运行中</Option>*/}
+                                            {/*</Select>*/}
 
-                                        </FormItem>
-                                    </Col>
-                                    <Col md={8} sm={24}>
-                                    <span className={"submitButtons"}>
-                                        <Button type="primary">
-                                            查询
-                                        </Button>
-                                        <Button style={{ marginLeft: 8 }}>
-                                            重置
-                                        </Button>
-                                    </span>
-                                    </Col>
+                                        {/*</FormItem>*/}
+                                    {/*</Col>*/}
+                                    {/*<Col md={8} sm={24}>*/}
+                                    {/*<span className={"submitButtons"}>*/}
+                                        {/*<Button type="primary">*/}
+                                            {/*查询*/}
+                                        {/*</Button>*/}
+                                        {/*<Button style={{ marginLeft: 8 }}>*/}
+                                            {/*重置*/}
+                                        {/*</Button>*/}
+                                    {/*</span>*/}
+                                    {/*</Col>*/}
                                 </Row>
                             </Form>
                         </div>
@@ -186,7 +213,7 @@ class UserRule extends PureComponent {
                                 新建
                             </Button>
                         </div>
-                        <Table columns={columns} dataSource={this.state.data} rowKey={record => record._id} />
+                        <Table columns={columns} dataSource={this.state.data} rowKey={record => record.updatedAt} />
                     </div>
                 </Card>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './style.css';
 
 const { Sider } = Layout;
+const SubMenu = Menu.SubMenu;
 
 class SiderMenu extends PureComponent {
     state = {
@@ -30,21 +31,23 @@ class SiderMenu extends PureComponent {
                         </Link>
                     </div>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.path]}>
-                        <Menu.Item key="info">
-                            <Icon type="desktop" />
-                            <span className="nav-text">订阅管理</span>
-                            <Link to={"info"}/>
-                        </Menu.Item>
-                        <Menu.Item key="rule">
-                            <Icon type="appstore-o" />
-                            <span className="nav-text">规则管理</span>
-                            <Link to={"rule"}/>
-                        </Menu.Item>
                         <Menu.Item key="center">
                             <Icon type="user" />
                             <span className="nav-text">个人中心</span>
                             <Link to={"center"}/>
                         </Menu.Item>
+                        <SubMenu key="info" title={<span><Icon type="mail" /><span>适航指令订阅</span></span>}>
+                            <Menu.Item key="info">
+                                <Icon type="desktop" />
+                                <span className="nav-text">订阅管理</span>
+                                <Link to={"info"}/>
+                            </Menu.Item>
+                            <Menu.Item key="rule">
+                                <Icon type="appstore-o" />
+                                <span className="nav-text">规则管理</span>
+                                <Link to={"rule"}/>
+                            </Menu.Item>
+                        </SubMenu>
                     </Menu>
                 </Sider>
             </div>

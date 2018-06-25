@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import "./index.css"
-import { Form, Input, Row, Button, Icon, Tooltip } from "antd/lib/index";
+import { Form, Input, Row, Button, Icon, Tooltip, message } from "antd/lib/index";
 import { post } from '../../Utils/fetch';
 import {setItem, getItem, removeItem} from "../../Utils/storage";
 import history from '../../Router/history';
@@ -23,7 +23,7 @@ class NLoginForm extends Component {
 
     componentDidMount() {
         const loginTime = getItem("loginTime");
-        const admin = getItem("admin");
+        // const admin = getItem("admin");
 
         if (Math.floor(Date.now()/1000) - loginTime > config.loginEffect) {
             removeItem("token");
@@ -31,11 +31,11 @@ class NLoginForm extends Component {
             removeItem("_id");
             removeItem("loginTime");
         } else {
-            if (admin) {
-                history.push("admin/user");
-            } else {
-                history.push("user/info")
-            }
+            // if (admin) {
+            //     history.push("admin/user");
+            // } else {
+                history.push("user/center")
+            // }
         }
     }
 
@@ -76,14 +76,14 @@ class NLoginForm extends Component {
     handleLogin() {
         // 登陆验证逻辑
         post(
-            'user/login',
+            'cli/login',
             {
                 "username": this.state.username,
                 "password": this.state.password
             }, false).then(
                 (response) => {
-                    console.log(response);
                     if (response.success) {
+                        message.success("登录成功");
                         setItem("token", response.token);
                         setItem("username", this.state.username);
                         setItem("_id", response._id);
@@ -91,14 +91,10 @@ class NLoginForm extends Component {
                         setItem("loginTime", Math.floor(Date.now()/1000));
                         const token = getItem("token");
                         if (token.length > 0) {
-                            if (response.admin) {
-                                history.push("admin/user");
-                            } else {
-                                history.push("user/info")
-                            }
+                            history.push("user/info");
                         }
                     } else {
-                        console.log(response);
+                        message.error(response.info);
                     }
                 }
             );

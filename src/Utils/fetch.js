@@ -5,10 +5,9 @@ export function get(url, containUserInfo = true) {
     let headers;
     if(containUserInfo) {
         const auth = getItem("token");
-        const _id = getItem("_id");
         headers = {
             auth,
-            _id,
+
             'Content-Type': 'application/json'
         }
     } else {
@@ -28,10 +27,9 @@ export function post(url, json, containUserInfo = true) {
     let headers;
     if(containUserInfo) {
         const auth = getItem("token");
-        const _id = getItem("_id");
         headers = {
             auth,
-            _id,
+
             'Content-Type': 'application/json'
         }
     } else {

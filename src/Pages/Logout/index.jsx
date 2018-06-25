@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { removeItem} from "../../Utils/storage";
+import { message } from 'antd';
+import { post } from '../../Utils/fetch';
 import "./style.css";
 
 import logo from '../../assets/logo.svg';
@@ -9,6 +11,15 @@ import logo from '../../assets/logo.svg';
 class Logout extends Component {
 
     componentDidMount() {
+        post('user/logout').then(
+            response => {
+                if(response.success) {
+                    message.success(response.info);
+                } else {
+                    message.error(response.info);
+                }
+            }
+        );
         removeItem("token");
         removeItem("username");
         removeItem("_id");

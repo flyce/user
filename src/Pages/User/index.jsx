@@ -6,16 +6,6 @@ import Layout from "../../Components/Layout";
 
 const User = (location) => {
     let content;
-    // if(location.match.params.path === 'rule') {
-    //     content = <UserRule/>
-    // } else if(location.match.params.path === 'info'){
-    //     content = <SubscribeManage/>
-    // } else {
-    //     content = <div>
-    //         Wrong path.
-    //     </div>
-    // }
-
     switch (location.match.params.path) {
         case 'rule': content = <UserRule/>; break;
         case 'info': content = <SubscribeManage/>; break;

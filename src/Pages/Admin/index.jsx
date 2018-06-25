@@ -13,7 +13,7 @@ const content = {
     cad: <CadTable/>,
     ad: <AdTable/>,
     maillog: <MailLog/>,
-}
+};
 
 const Lay = ({match}) => {
     return (<Layout>

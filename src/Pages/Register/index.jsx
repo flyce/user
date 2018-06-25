@@ -1,13 +1,53 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./index.css";
-import { Form, Input, Row, Button, Icon} from "antd/lib/index";
+import {Form, Input, Row, Button, Icon, message} from "antd/lib/index";
 import logo from '../../assets/logo.svg';
+import { post } from "../../Utils/fetch";
+import history from "../../Router/history";
 
 const FormItem = Form.Item;
 
-
 class NRegisterForm extends Component {
+    state = {
+        buttonDisabled: true
+    };
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            if(fieldsValue.password) {
+                post('cli/register', fieldsValue).then(
+                    response => {
+                        if(response.success) {
+                            message.success(response.info);
+                            this.props.form.resetFields();
+                            history.push('/login')
+                        } else {
+                            message.error(response.info);
+                        }
+                    }
+                )
+            } else {
+                message.error("两次密码不一致！");
+            }
+        });
+    }
+
+    verifyCaptcha() {
+        // 直接生成一个验证码对象
+        const captcha = new window.TencentCaptcha('2005711029', function(res) {
+            if(res.ret === 0){
+                console.log(res);
+                this.setState({
+                    buttonDisabled: false
+                });
+            }
+        }.bind(this));
+        captcha.show(); // 显示验证码
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -47,7 +87,9 @@ class NRegisterForm extends Component {
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('mail', {
-                            rules: [{ required: true, message: 'Please input your mail address!' }],
+                            rules: [{ required: true, message: 'Please input your mail address!' },{
+                                type: 'email', message: 'The input is not valid E-mail!',
+                            }],
                         })(
                             <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="邮箱" />
                         )}
@@ -67,14 +109,10 @@ class NRegisterForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('checkpassword', {
-                            rules: [{ required: true, message: 'Please input your Password again!' }],
-                        })(
-                            <Input prefix={<Icon type="bulb" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="再次输入密码" />
-                        )}
+                        <Button onClick={this.verifyCaptcha.bind(this)}>人机验证</Button>
                     </FormItem>
                     <Row>
-                        <Button type="primary">
+                        <Button type="primary" disabled={this.state.buttonDisabled} onClick={this.handleSubmit.bind(this)}>
                             注册
                         </Button>
                         <p>

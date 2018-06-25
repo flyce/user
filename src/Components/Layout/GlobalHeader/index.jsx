@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Menu, Icon, Dropdown, Avatar, Tooltip, Form, Modal, Input } from 'antd';
+import { Menu, Icon, Dropdown, Avatar, Tooltip, Form, Modal, Input, message } from 'antd';
 import { Link } from "react-router-dom";
 import './style.css';
 import { post } from "../../../Utils/fetch";
@@ -12,17 +12,14 @@ const CreateForm = Form.create()(props => {
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
             if (fieldsValue.password.length > 0) {
-                console.log(1);
                 if (err) return;
                 form.resetFields();
                 if (fieldsValue.password === fieldsValue.verifypassword) {
                     handleAdd(fieldsValue);
                     handleModalVisible();
                 } else {
-                    console.log("两次密码不一致!");
+                   message.error("两次密码不一致!");
                 }
-            } else {
-                console.log(2);
             }
         });
     };
@@ -82,7 +79,9 @@ export default class GlobalHeader extends PureComponent {
         post('user/update', {
             password: data.password
         }).then(response => {
-            console.log(response);
+            if(response.success) {
+                message.success(response.info);
+            }
         })
     };
 
@@ -94,12 +93,8 @@ export default class GlobalHeader extends PureComponent {
 
     render() {
         const {
-            currentUser = {},
             collapsed,
-            fetchingNotices,
-            onNoticeVisibleChange,
             onMenuClick,
-            onNoticeClear,
         } = this.props;
 
         const parentMethods = {
