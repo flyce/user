@@ -30,12 +30,12 @@ const CreateForm = Form.create()(props => {
             onOk={okHandle}
             onCancel={() => handleModalVisible()}
         >
-            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="规则">
+            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
                 {form.getFieldDecorator('password', {
                     rules: [{ required: true, message: 'Please input some rule...' }],
                 })(<Input placeholder="请输入密码" type="password"/>)}
             </FormItem>
-            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
+            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="确认密码">
                 {form.getFieldDecorator('verifypassword', {
                     rules: [{ required: true, message: 'Please input some description...' }],
                 })(<Input placeholder="请再输一遍" type="password"/>)}

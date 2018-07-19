@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Card, Button, Row, Col, Form, Input, Table, Modal, message } from 'antd';
 import './style.css'
 import LoginVerify from '../LoginVerify';
@@ -11,6 +11,7 @@ const CreateForm = Form.create()(props => {
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
             if (err) return;
+            console.log(fieldsValue);
             form.resetFields();
             handleAdd(fieldsValue);
             handleModalVisible();
@@ -37,7 +38,7 @@ const CreateForm = Form.create()(props => {
     );
 });
 
-class UserRule extends PureComponent {
+class AdRule extends Component {
     state = {
         modalVisible: false,
         isLoading: true,
@@ -81,10 +82,9 @@ class UserRule extends PureComponent {
                 }
             });
         } else {
-            message.error(`rule: ${data.rule} 已存在！`);
+            message.error(`规则: ${data.rule} 已存在！`);
         }
     };
-
 
     componentDidMount() {
         get('user/rule').then((res) => {
@@ -179,8 +179,7 @@ class UserRule extends PureComponent {
                                         {/*<FormItem label="规则">*/}
                                             {/*<Input placeholder="请输入" />*/}
                                         {/*</FormItem>*/}
-                                        使用说明：<br />该规则CAAC CAD和EASA AD通用，CAD匹配指令编号(CAD2018-B737-10)，
-                                        AD匹配Approval Holder / Type Designation（BOEING 737），
+                                        使用说明：<br />该规则仅适用于CAAC CAD，匹配指令编号(CAD2018-B737-10)，
                                         如果在标题中匹配到关键词，则发送邮件到您预留的邮箱。
                                         为了达到更好的效果，建议只输入最小关键词。
                                         例如BOEING 737建议设置匹配关键词为737；AIRBUS A320建议设置关键词为320。<br />
@@ -212,6 +211,17 @@ class UserRule extends PureComponent {
                             <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                                 新建
                             </Button>
+                            <Button type="default" onClick={() => {
+                                this.handleAdd({rule: "MULT", description: "Boeing"})
+                            }}>
+                                MULT
+                            </Button>
+                            <Button type="default" onClick={() => this.handleAdd({rule: "737", description: "Boeing"})}>
+                                737
+                            </Button>
+                            <Button type="default" onClick={() => this.handleAdd({rule: "320", description: "Airbus"})}>
+                                320
+                            </Button>
                         </div>
                         <Table columns={columns} dataSource={this.state.data} rowKey={record => record.updatedAt} />
                     </div>
@@ -222,4 +232,4 @@ class UserRule extends PureComponent {
     }
 };
 
-export default UserRule;
+export default AdRule;
