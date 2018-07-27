@@ -49,12 +49,12 @@ class SiderMenu extends PureComponent {
                             </Menu.Item>
                             <Menu.Item key="cadrule">
                                 <Icon type="appstore-o" />
-                                <span className="nav-text">CAD规则管理</span>
+                                <span className="nav-text">CAAC CAD规则管理</span>
                                 <Link to={"cadrule"}/>
                             </Menu.Item>
                             <Menu.Item key="adrule">
                                 <Icon type="appstore-o" />
-                                <span className="nav-text">AD规则管理</span>
+                                <span className="nav-text">EASA AD规则管理</span>
                                 <Link to={"adrule"}/>
                             </Menu.Item>
                         </SubMenu>
@@ -65,8 +65,13 @@ class SiderMenu extends PureComponent {
                                 <Link to={"eltinfo"}/>
                             </Menu.Item>
                             <Menu.Item key="import">
+                                <Icon type="file-excel" />
+                                <span className="nav-text">ELT录入</span>
+                                <Link to={"import"}/>
+                            </Menu.Item>
+                            <Menu.Item key="com">
                                 <Icon type="bulb" />
-                                <span className="nav-text">ELT导入</span>
+                                <span className="nav-text">Compass decoder</span>
                                 <Link to={"import"}/>
                             </Menu.Item>
                         </SubMenu>

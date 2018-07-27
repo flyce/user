@@ -77,9 +77,6 @@ class PersonalCenter extends React.PureComponent {
     }
 
     render() {
-        if (this.state.isLoading) {
-            return <div>Loading...</div>
-        }
         const { username, name, company, position, phone, mail } = this.state;
         return (
             <Card bordered={false}>

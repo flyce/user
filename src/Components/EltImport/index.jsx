@@ -4,6 +4,7 @@ import {
     Form, Select, Button, Input, DatePicker, Tabs
 } from 'antd';
 import './style.css';
+import { post, file } from "../../Utils/fetch";
 const TabPane = Tabs.TabPane;
 
 const FormItem = Form.Item;
@@ -11,33 +12,52 @@ const Option = Select.Option;
 
 const Dragger = Upload.Dragger;
 
-const props = {
-    name: 'file',
-    multiple: false,
-    action: '//jsonplaceholder.typicode.com/posts/',
-    onChange(info) {
-        const status = info.file.status;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
 
 const BaseInfo = (props) => {
+    const { form } = props;
     const { getFieldDecorator } = props.form;
     const formItemLayout = {
         span: '8'
     };
+
+    const okHandle = () => {
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            post('user/elt', {...fieldsValue}).then((response, err) => {
+                if(!err) {
+                    if(response.success) {
+                        message.info(response.info);
+                        form.resetFields();
+                    } else {
+                        message.error(response.info);
+                    }
+                }
+            })
+        });
+    };
+
+    const uploadData = {
+        name: 'elt',
+        multiple: true,
+        customRequest(info) {
+            console.log(info.file);
+            const data = new FormData();
+            data.append('elt', info.file);
+            file(data).then((response) => {
+                if(response.success) {
+                    message.info(response.info);
+                } else {
+                    message.error(response.info);
+                }
+            });
+        }
+    };
+
     return (
         <Card>
             <Tabs defaultActiveKey="1">
                 <TabPane tab={<span><Icon type="edit" />单条录入</span>} key="1">
-                    <Form onSubmit={this.handleSubmit}
+                    <Form
                           style={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "start"}}
                     >
                         <FormItem
@@ -46,12 +66,12 @@ const BaseInfo = (props) => {
                             className="item"
                             hasFeedback
                         >
-                            {getFieldDecorator('registercode', {
+                            {getFieldDecorator('registration', {
                                 rules: [{
                                     required: true, message: '请输入航空器注册号',
                                 }],
                             })(
-                                <Input placeholder="请输入航空器注册号"/>
+                                <Input placeholder="请输入航空器注册号" addonBefore="B-"/>
                             )}
                         </FormItem>
                         <FormItem
@@ -74,7 +94,7 @@ const BaseInfo = (props) => {
                             className="item offset"
                             hasFeedback
                         >
-                            {getFieldDecorator('factory', {
+                            {getFieldDecorator('manufacturer', {
                                 rules: [{
                                     type: 'string', message: '请输入制造商',
                                 }]
@@ -88,7 +108,7 @@ const BaseInfo = (props) => {
                             className="item"
                             hasFeedback
                         >
-                            {getFieldDecorator('device', {
+                            {getFieldDecorator('equipment', {
                                 rules: [{
                                     type: 'string', message: '请输入设备型号',
                                 }]
@@ -102,7 +122,7 @@ const BaseInfo = (props) => {
                             className="item offset"
                             hasFeedback
                         >
-                            {getFieldDecorator('series', {
+                            {getFieldDecorator('seriesNumber', {
                                 rules: [{
                                     type: 'string', message: '请输入序号',
                                 }]
@@ -174,7 +194,7 @@ const BaseInfo = (props) => {
                             className="item"
                             hasFeedback
                         >
-                            {getFieldDecorator('transmitType', {
+                            {getFieldDecorator('txType', {
                                 rules: [{
                                     type: 'string', message: '请输入发射类型',
                                 }]
@@ -188,7 +208,7 @@ const BaseInfo = (props) => {
                             className="item offset"
                             hasFeedback
                         >
-                            {getFieldDecorator('transmitPower', {
+                            {getFieldDecorator('power', {
                                 rules: [{
                                     type: 'string', message: '请输入发射功率',
                                 }]
@@ -209,13 +229,13 @@ const BaseInfo = (props) => {
                             className="item offset"
                             hasFeedback
                         >
-                            <Button type="primary" className="submitButton">提交</Button>
+                            <Button type="primary" onClick={okHandle} htmlType="submit">提交</Button>
                         </FormItem>
                     </Form>
                 </TabPane>
                 <TabPane tab={<span><Icon type="file-excel" />从EXCEL导入</span>} key="2">
                     <Dragger
-                        {...props}
+                        {...uploadData}
                         className="upload"
                     >
                         <p className="ant-upload-drag-icon">

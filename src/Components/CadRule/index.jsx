@@ -96,7 +96,7 @@ class AdRule extends Component {
             } else {
                 message.error(res.info);
             }
-        })
+        });
     }
 
     handleRemove = value => {
@@ -115,10 +115,6 @@ class AdRule extends Component {
     };
 
     render () {
-        if (this.state.isLoading) {
-            return <div>Loading...</div>;
-        }
-
         const columns = [
             {
                 title: '规则',
@@ -223,7 +219,7 @@ class AdRule extends Component {
                                 320
                             </Button>
                         </div>
-                        <Table columns={columns} dataSource={this.state.data} rowKey={record => record.updatedAt} />
+                        <Table columns={columns} dataSource={this.state.data} loading={this.state.isLoading} rowKey={record => record.updatedAt} />
                     </div>
                 </Card>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey />

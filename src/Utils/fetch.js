@@ -47,3 +47,18 @@ export function post(url, json, containUserInfo = true) {
 
     return result;
 }
+
+export function file(data) {
+    const option ={
+        method: 'post',
+        headers: {
+            'auth': getItem("token"),
+        },
+        body:data
+    };
+    const result = fetch(config.url + 'user/upload', option).then(function (response) {
+        return response.json();
+    });
+
+    return result;
+}
