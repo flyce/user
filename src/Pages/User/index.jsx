@@ -6,6 +6,7 @@ import PersonalCenter from "../../Components/PersonalCenter";
 import Layout from "../../Components/Layout";
 import EltInfo from "../../Components/EltInfo";
 import EltImport from "../../Components/EltImport";
+import Cospas from "../../Components/Cospas";
 
 const User = (location) => {
     let content;
@@ -16,6 +17,7 @@ const User = (location) => {
         case 'center': content = <PersonalCenter/>; break;
         case 'eltinfo': content = <EltInfo/>; break;
         case 'import': content = <EltImport/>; break;
+        case 'cospass': content = <Cospas/>; break;
         default:  content = <div>
             Wrong path.
         </div>;

@@ -69,10 +69,10 @@ class SiderMenu extends PureComponent {
                                 <span className="nav-text">ELT录入</span>
                                 <Link to={"import"}/>
                             </Menu.Item>
-                            <Menu.Item key="com">
+                            <Menu.Item key="cospass">
                                 <Icon type="bulb" />
-                                <span className="nav-text">Compass decoder</span>
-                                <Link to={"import"}/>
+                                <span className="nav-text">Cospas decoder</span>
+                                <Link to={"cospass"}/>
                             </Menu.Item>
                         </SubMenu>
                     </Menu>
