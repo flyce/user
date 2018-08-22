@@ -41,6 +41,11 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">航空器信息</span>
                             <Link to={"aircraft"}/>
                         </Menu.Item>
+                        <Menu.Item key="radio">
+                            <Icon type="disconnect" />
+                            <span className="nav-text">电台执照</span>
+                            <Link to={"radio"}/>
+                        </Menu.Item>
                         <SubMenu key="ad" title={<span><Icon type="mail" /><span>适航指令订阅</span></span>}>
                             <Menu.Item key="info">
                                 <Icon type="desktop" />

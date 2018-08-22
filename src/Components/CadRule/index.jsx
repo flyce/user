@@ -38,7 +38,7 @@ const CreateForm = Form.create()(props => {
     );
 });
 
-class AdRule extends Component {
+class CadRule extends Component {
     state = {
         modalVisible: false,
         isLoading: true,
@@ -74,7 +74,7 @@ class AdRule extends Component {
                 data: arr
             });
             const rule = [...arr];
-            post('user/rule', {rule}).then((response) => {
+            post('user/cadrule', {rule}).then((response) => {
                 if (response.success) {
                     message.success(response.info);
                 } else {
@@ -87,7 +87,7 @@ class AdRule extends Component {
     };
 
     componentDidMount() {
-        get('user/rule').then((res) => {
+        get('user/cadrule').then((res) => {
             if(res.success) {
                 this.setState({
                     data: res.rule,
@@ -105,7 +105,7 @@ class AdRule extends Component {
             data
         });
         const rule = [...data];
-        post('user/rule', {rule}).then((response) => {
+        post('user/cadrule', {rule}).then((response) => {
             if (response.success) {
                 message.success(response.info);
             } else {
@@ -228,4 +228,4 @@ class AdRule extends Component {
     }
 };
 
-export default AdRule;
+export default CadRule;

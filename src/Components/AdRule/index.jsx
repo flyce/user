@@ -1,15 +1,15 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Card, Button, Row, Col, Form, Input, Table, Modal, message } from 'antd';
 import LoginVerify from '../LoginVerify';
 import {get, post} from '../../Utils/fetch';
 const FormItem = Form.Item;
-// const { Option } = Select;
 
 const CreateForm = Form.create()(props => {
     const { modalVisible, form, handleAdd, handleModalVisible } = props;
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
             if (err) return;
+            console.log(fieldsValue);
             form.resetFields();
             handleAdd(fieldsValue);
             handleModalVisible();
@@ -36,7 +36,7 @@ const CreateForm = Form.create()(props => {
     );
 });
 
-class AdRule extends PureComponent {
+class AdRule extends Component {
     state = {
         modalVisible: false,
         isLoading: true,
@@ -56,23 +56,25 @@ class AdRule extends PureComponent {
     };
 
     handleAdd = data => {
-        const arr = this.state.data;
+        const arr = this.state.data === undefined ? [] : this.state.data;
         data.status = true;
         data.updatedAt = new Date().toLocaleString('zh-CN', {hour12:false});
         let existFlag = false;
-        arr.map((value) => {
-            if (data.rule === value.rule) {
-                existFlag = true;
-            }
-            return 0;
-        });
+        if(arr) {
+            arr.map((value) => {
+                if (data.rule === value.rule) {
+                    existFlag = true;
+                }
+                return 0;
+            });
+        }
         if (!existFlag) {
             arr.push(data);
             this.setState ({
                 data: arr
             });
             const rule = [...arr];
-            post('user/rule', {rule}).then((response) => {
+            post('user/adrule', {rule}).then((response) => {
                 if (response.success) {
                     message.success(response.info);
                 } else {
@@ -80,13 +82,12 @@ class AdRule extends PureComponent {
                 }
             });
         } else {
-            message.error(`rule: ${data.rule} 已存在！`);
+            message.error(`规则: ${data.rule} 已存在！`);
         }
     };
 
-
     componentDidMount() {
-        get('user/rule').then((res) => {
+        get('user/adrule').then((res) => {
             if(res.success) {
                 this.setState({
                     data: res.rule,
@@ -95,7 +96,7 @@ class AdRule extends PureComponent {
             } else {
                 message.error(res.info);
             }
-        })
+        });
     }
 
     handleRemove = value => {
@@ -104,7 +105,7 @@ class AdRule extends PureComponent {
             data
         });
         const rule = [...data];
-        post('user/rule', {rule}).then((response) => {
+        post('user/adrule', {rule}).then((response) => {
             if (response.success) {
                 message.success(response.info);
             } else {
@@ -174,38 +175,23 @@ class AdRule extends PureComponent {
                                         {/*<FormItem label="规则">*/}
                                         {/*<Input placeholder="请输入" />*/}
                                         {/*</FormItem>*/}
-                                        使用说明：<br />该规则CAAC CAD和EASA AD通用，CAD匹配指令编号(CAD2018-B737-10)，
-                                        AD匹配Approval Holder / Type Designation（BOEING 737），
+                                        使用说明：<br />该规则仅适用于EASA AD，匹配航空器，
                                         如果在标题中匹配到关键词，则发送邮件到您预留的邮箱。
                                         为了达到更好的效果，建议只输入最小关键词。
                                         例如BOEING 737建议设置匹配关键词为737；AIRBUS A320建议设置关键词为320。<br />
                                     </Col>
-                                    {/*<Col md={8} sm={24}>*/}
-                                    {/*<FormItem label="使用状态">*/}
-
-                                    {/*<Select placeholder="请选择" style={{ width: '100%' }}>*/}
-                                    {/*<Option value="0">关闭</Option>*/}
-                                    {/*<Option value="1">运行中</Option>*/}
-                                    {/*</Select>*/}
-
-                                    {/*</FormItem>*/}
-                                    {/*</Col>*/}
-                                    {/*<Col md={8} sm={24}>*/}
-                                    {/*<span className={"submitButtons"}>*/}
-                                    {/*<Button type="primary">*/}
-                                    {/*查询*/}
-                                    {/*</Button>*/}
-                                    {/*<Button style={{ marginLeft: 8 }}>*/}
-                                    {/*重置*/}
-                                    {/*</Button>*/}
-                                    {/*</span>*/}
-                                    {/*</Col>*/}
                                 </Row>
                             </Form>
                         </div>
                         <div className={"tableListOperator"}>
                             <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                                 新建
+                            </Button>
+                            <Button type="default" onClick={() => this.handleAdd({rule: "737", description: "Boeing"})}>
+                                737
+                            </Button>
+                            <Button type="default" onClick={() => this.handleAdd({rule: "320", description: "Airbus"})}>
+                                320
                             </Button>
                         </div>
                         <Table columns={columns} dataSource={this.state.data} loading={this.state.isLoading} rowKey={record => record.updatedAt} />

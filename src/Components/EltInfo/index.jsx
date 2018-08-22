@@ -33,7 +33,7 @@ const CreateForm = Form.create()((props) => {
             onCancel={() => handleModalVisible()}
             width="80%"
             footer={[
-                <Popconfirm title="确定删除?" onConfirm={() => {handleDelete(value._id)}} okText="确定" cancelText="取消">
+                <Popconfirm title="确定删除?" onConfirm={() => {handleDelete({_id: value._id})}} okText="确定" cancelText="取消">
                     <Button key="reset" type="danger" ghost>
                         删除
                     </Button>
@@ -226,6 +226,7 @@ class EltInfo extends React.Component {
         count: 0,
         defaultCurrent: 1,
         modalVisible: false,
+        selectedRowKeys: [],
         value: {
             code: "B38DDE0384403A1",
             effectiveDate: "0",
@@ -257,7 +258,7 @@ class EltInfo extends React.Component {
 
     componentDidMount() {
         this.init();
-        get('user/count').then(res => {
+        get('user/count?db=elt').then(res => {
             if(res.success) {
                 this.setState({
                     count: res.count
@@ -325,19 +326,26 @@ class EltInfo extends React.Component {
         });
     };
 
-    handleDelete = (_id) => {
-        post('user/elt/delete', {_id}).then((response) => {
+    handleDelete = (id) => {
+        post('user/elt/delete', id).then((response) => {
             if(response.success) {
                 message.info(response.info);
                 this.handleModalVisible();
                 this.init();
+                this.setState({ selectedRowKeys: [] });
             } else {
                 message.error(response.info);
             }
         });
     };
 
+    onSelectChange = (selectedRowKeys) => {
+        console.log(selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
     render() {
+        const { isLoading, selectedRowKeys } = this.state;
         const columns = [{
             title: '注册号',
             key: 'registration',
@@ -367,7 +375,7 @@ class EltInfo extends React.Component {
             dataIndex: 'equipment',
             key: 'equipment',
         }, {
-            title: '系列号',
+            title: '序列号',
             dataIndex: 'seriesNumber',
             key: 'seriesNumber',
         }, {
@@ -394,6 +402,11 @@ class EltInfo extends React.Component {
 
         }];
 
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+
         const parentMethods = {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
@@ -401,13 +414,28 @@ class EltInfo extends React.Component {
             handleDelete: this.handleDelete
         };
 
+        const hasSelected = selectedRowKeys.length > 0;
+
         return (
             <Card bordered={false}>
                 <LoginVerify/>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey value={this.state.value}/>
+                <div style={{marginBottom: 10}}>
+                    <Button
+                        ghost
+                        type="danger"
+                        onClick={() => {
+                            this.handleDelete(this.state.selectedRowKeys)
+                        }}
+                        disabled={!hasSelected}
+                    >
+                        删除
+                    </Button>
+                </div>
                 <Table
                     dataSource={this.state.data}
-                    loading={this.state.isLoading}
+                    rowSelection={rowSelection}
+                    loading={isLoading}
                     columns={columns}
                     rowKey={record => record._id}
                     pagination={{

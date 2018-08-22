@@ -323,7 +323,7 @@ class BaseInfo extends React.PureComponent {
                     <TabPane tab={<span><Icon type="file-excel" />从EXCEL导入</span>} key="2">
                         <div className="uploadContainer">
                             <div style={{display: "flex", justifyContent: "center", paddingBottom: "10px"}}>
-                                <a href="https://store.flyce.cn/yuanweistudio/store/ELT.xlsx" target="_blank" download="ELT.xlsx">点击下载导入模版</a>
+                                <a href="https://store.flyce.cn/yuanweistudio/store/ELT.xlsx" target="_blank" rel="noopener noreferrer" download="ELT.xlsx">点击下载导入模版</a>
                             </div>
                             <Dragger
                                 {...uploadData}
