@@ -30,7 +30,7 @@ class SiderMenu extends PureComponent {
                             <h1>IRIS STUDIO</h1>
                         </Link>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.path]} defaultOpenKeys={['ad', 'elt']}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.path]} defaultOpenKeys={['ad', 'elt', 'ra']}>
                         <Menu.Item key="center">
                             <Icon type="user" />
                             <span className="nav-text">个人中心</span>
@@ -41,11 +41,18 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">航空器信息</span>
                             <Link to={"aircraft"}/>
                         </Menu.Item>
-                        <Menu.Item key="radio">
-                            <Icon type="disconnect" />
-                            <span className="nav-text">电台执照</span>
-                            <Link to={"radio"}/>
-                        </Menu.Item>
+                        <SubMenu key="ra" title={<span><Icon type="wifi" /><span>电台执照管理</span></span>}>
+                            <Menu.Item key="radio">
+                                <Icon type="disconnect" />
+                                <span className="nav-text">到期预警</span>
+                                <Link to={"radio"}/>
+                            </Menu.Item>
+                            <Menu.Item key="radiolist">
+                                <Icon type="profile" />
+                                <span className="nav-text">电台执照清单</span>
+                                <Link to={"radiolist"}/>
+                            </Menu.Item>
+                        </SubMenu>
                         <SubMenu key="ad" title={<span><Icon type="mail" /><span>适航指令订阅</span></span>}>
                             <Menu.Item key="info">
                                 <Icon type="desktop" />
