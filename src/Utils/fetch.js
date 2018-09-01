@@ -1,5 +1,6 @@
 import config from '../Config/env';
 import { getItem } from "./storage";
+// import './download';
 
 export function get(url, containUserInfo = true) {
     let headers;
@@ -16,7 +17,8 @@ export function get(url, containUserInfo = true) {
         }
     }
     const result = fetch(config.url + url, {
-        headers
+        headers,
+        method: "GET"
     }).then(function (response) {
         return response.json();
     });
@@ -61,4 +63,21 @@ export function file(data) {
     });
 
     return result;
+}
+
+export function downloadFile(url, filename) {
+    fetch(config.url + url, {
+        method: 'GET',
+        headers: {
+            'auth': getItem("token"),
+        },
+    }).then(function(resp) {
+        return resp.blob();
+    }).then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+    });
 }

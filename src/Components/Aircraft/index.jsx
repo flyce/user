@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Pop
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import {get, post} from '../../Utils/fetch';
+import { downloadFile, get, post } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -587,7 +587,15 @@ class EltInfo extends React.Component {
                     });
                     this.setState({create: true});
                     this.handleModalVisible(true);
-                }}>新建</Button>
+                }}>新建</Button>&nbsp;&nbsp;
+                <Button
+                    onClick={() => {
+                        downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString() + "_"+ new Date().toLocaleTimeString('zh-CN', { hour12: false }));
+                        message.info("导出中，请稍后！");
+                    }}
+                >
+                    导出
+                </Button>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey value={this.state.value} create={this.state.create}/>
                 <Table
                     dataSource={this.state.data}

@@ -1,0 +1,14 @@
+.decoder {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+}
+
+.binary {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.decoderHeader {
+    margin-top: 10px;
+}

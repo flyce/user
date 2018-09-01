@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, Select, DatePic
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import {get, post} from '../../Utils/fetch';
+import {get, post, downloadFile } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -256,6 +256,7 @@ class EltInfo extends React.Component {
         });
     };
 
+
     componentDidMount() {
         this.init();
         get('user/count?db=elt').then(res => {
@@ -430,6 +431,13 @@ class EltInfo extends React.Component {
                         disabled={!hasSelected}
                     >
                         删除
+                    </Button>&nbsp;&nbsp;
+                    <Button
+                        onClick={() => {
+                            downloadFile("user/export/elt", "ELT_list_" + new Date().toLocaleDateString() + "_"+ new Date().toLocaleTimeString('zh-CN', { hour12: false }));
+                        }}
+                    >
+                        导出
                     </Button>
                 </div>
                 <Table
