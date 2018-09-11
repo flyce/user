@@ -590,7 +590,7 @@ class EltInfo extends React.Component {
                 }}>新建</Button>&nbsp;&nbsp;
                 <Button
                     onClick={() => {
-                        downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString() + "_"+ new Date().toLocaleTimeString('zh-CN', { hour12: false }));
+                        downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
                         message.info("导出中，请稍后！");
                     }}
                 >

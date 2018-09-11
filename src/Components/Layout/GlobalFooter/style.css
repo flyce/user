@@ -25,3 +25,8 @@
     /*color: @text-color-secondary;*/
     /*font-size: @font-size-base;*/
 }
+
+.like {
+    display: flex;
+    justify-content: center;
+}

@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, Table, message, Button } from 'antd';
 import LoginVerify from '../LoginVerify';
 
-import { get } from '../../Utils/fetch';
+import {downloadFile, get} from '../../Utils/fetch';
 
 import './style.css';
 
@@ -73,7 +73,8 @@ class RadioList extends React.Component {
                     <h3>本页面仅提供查看功能，如需修改，请到"航空器信息"模块操作。</h3>
                     <Button
                         onClick={() => {
-                            message.error("仅供订阅用户使用")
+                            downloadFile("user/export/radio", "Radio_List_" + new Date().toLocaleDateString());
+                            message.info("导出中，请稍后！");
                         }}
                         size="small"
                     >

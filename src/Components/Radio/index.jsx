@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Card, List, Tabs, Table, Button } from 'antd';
 import "./style.css";
-import {get} from "../../Utils/fetch";
+import {downloadFile, get} from "../../Utils/fetch";
 import { message } from "antd/lib/index";
 
 const TabPane = Tabs.TabPane;
@@ -14,7 +14,8 @@ class Radio extends React.PureComponent {
         defaultCurrent: 1,
         count15: 0,
         count30: 0,
-        count60: 0
+        count60: 0,
+        activeKey: "1"
     };
 
     componentDidMount() {
@@ -67,13 +68,15 @@ class Radio extends React.PureComponent {
             case "3": limit = 60;break;
             default: break;
         }
+        this.setState({
+            activeKey: tab
+        });
         get('user/radio?skip=' + (this.state.defaultCurrent - 1) + "&date=" + limit).then((res) => {
             if(res.success) {
                 this.setState({
                     data: res.radio,
                     isLoading: false
                 });
-                console.log(res.radio);
             } else {
                 message.error(res.info);
             }
@@ -119,17 +122,17 @@ class Radio extends React.PureComponent {
             render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
         },{
             title: '剩余天数',
-            dataIndex: 'licenseDate',
-            render: (text) =>  Math.floor((text-Math.floor(Date.now() / 1000)) / 24 / 3600)
+            render: (text) =>  Math.floor((text.licenseDate-Math.floor(Date.now() / 1000)) / 24 / 3600)
         }];
 
         const operations = <Button
-                disabled
                 size="small"
                 onClick={() => {
-                    message.error("仅供订阅用户使用")
-                }
-                }
+                    let date = this.state.activeKey === '1' ? 15 : this.state.activeKey === '2' ? 30 : 60;
+                    let note = this.state.activeKey === '1' ? "15_days" : this.state.activeKey === '2' ? "30_days" : "60_days";
+                    downloadFile("user/export/radio?date=" + date, "Radio_List_Expires_in_" + note + "_" + new Date().toLocaleDateString());
+                    message.info("导出中，请稍后！");
+                }}
             >
                 导出
             </Button>;
@@ -143,8 +146,12 @@ class Radio extends React.PureComponent {
                    renderItem={(item, key) => (
                        <List.Item>
                            <Card title={item.title}>
-                               <div className={item.class}>
-                                   {key === 0 ? this.state.count15 : key === 1? this.state.count30 :this.state.count60}
+                               <div>
+                                   <a onClick={(event) => {
+                                       this.onTabsChange(event.target.id);
+                                   }} className={item.class} id={key + 1}>
+                                       {key === 0 ? this.state.count15 : key === 1? this.state.count30 :this.state.count60}
+                                   </a>
                                </div>
                            </Card>
                        </List.Item>
@@ -152,6 +159,7 @@ class Radio extends React.PureComponent {
                />
                <Tabs
                    defaultActiveKey="1"
+                   activeKey={this.state.activeKey}
                    onChange={this.onTabsChange}
                    tabBarExtraContent={operations}
                >

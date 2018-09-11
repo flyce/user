@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Popover, Button } from 'antd';
+// import { Popover, Button } from 'antd';
 import './style.css';
 
 const content = (
-    <div>
+    <div className="like">
         <div>
              <img alt="alipay" src="https://store.flyce.cn/alipay.png" height="150px" />
              <span>支付宝</span>
@@ -31,9 +31,10 @@ const GlobalFooter = ({ className = 'globalFooter', links, copyright }) => {
                     ))}
                 </div>
             )}
-            <Popover content={content} title="扫描二维码赞赏" trigger="hover">
-                <Button>支持我们</Button>
-            </Popover>
+            {/*<Popover content={content} title="扫描二维码赞赏" trigger="hover">*/}
+                {/*<Button>支持我们</Button>*/}
+            {/*</Popover>*/}
+            {content}
             {copyright && <div className={"copyright"}>{copyright}</div>}
         </div>
     );

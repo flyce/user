@@ -1,3 +1,18 @@
 .info {
    text-align: center;
 }
+
+.error {
+   color: #f5222d;
+   text-decoration: underline;
+}
+
+.warning {
+   color: #faad14;
+   text-decoration: underline;
+}
+
+.caution {
+   color: #52c41a;
+   text-decoration: underline;
+}

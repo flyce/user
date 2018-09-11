@@ -1,5 +1,5 @@
 const config = {
-    url: 'http://10.1.11.105:4000/',
+    url: 'https://api.yuanweistudio.com/',
     __DEV__: true,
     loginEffect: 7200,
 };

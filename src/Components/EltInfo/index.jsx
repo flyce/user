@@ -434,13 +434,15 @@ class EltInfo extends React.Component {
                     </Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            downloadFile("user/export/elt", "ELT_list_" + new Date().toLocaleDateString() + "_"+ new Date().toLocaleTimeString('zh-CN', { hour12: false }));
+                            downloadFile("user/export/elt", "ELT_list_" + new Date().toLocaleDateString());
                         }}
                     >
                         导出
                     </Button>
                 </div>
                 <Table
+                    width="500px"
+                    scroll={{ x: 1500 }}
                     dataSource={this.state.data}
                     rowSelection={rowSelection}
                     loading={isLoading}

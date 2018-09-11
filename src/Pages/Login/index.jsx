@@ -91,7 +91,7 @@ class NLoginForm extends Component {
                         setItem("loginTime", Math.floor(Date.now()/1000));
                         const token = getItem("token");
                         if (token.length > 0) {
-                            history.push("user/info");
+                            history.push("user/center");
                         }
                     } else {
                         message.error(response.info);
