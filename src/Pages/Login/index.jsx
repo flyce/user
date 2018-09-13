@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
 import "./index.css"
-import { Form, Input, Row, Button, Icon, Tooltip, message } from "antd/lib/index";
+import { Form, Input, Row, Button, Icon, Tooltip, message, notification } from "antd/lib/index";
 import { post } from '../../Utils/fetch';
 import {setItem, getItem, removeItem} from "../../Utils/storage";
 import history from '../../Router/history';
@@ -9,7 +10,6 @@ import logo from '../../assets/logo.svg';
 import config from "../../Config/env";
 
 const FormItem = Form.Item;
-
 
 class NLoginForm extends Component {
     constructor(props) {
@@ -92,6 +92,12 @@ class NLoginForm extends Component {
                         const token = getItem("token");
                         if (token.length > 0) {
                             history.push("user/center");
+                            notification.open({
+                                message: '重要通知',
+                                duration: 15,
+                                description: '适航辅助管理系统现处于公测期间，所有模块免费向全部用户提供！',
+                                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+                            });
                         }
                     } else {
                         message.error(response.info);

@@ -133,8 +133,8 @@ export default class GlobalHeader extends PureComponent {
                 <div className={"right"}>
                     <Tooltip title="使用文档">
                         <a
-                            target="_blank"
-                            href="https://www.flyce.cn/"
+                            // target="_blank"
+                            href="/"
                             rel="noopener noreferrer"
                             className={"action"}
                         >

@@ -6,13 +6,13 @@ import './style.css';
 const content = (
     <div className="like">
         <div>
-             <img alt="alipay" src="https://store.flyce.cn/alipay.png" height="150px" />
+             <img alt="alipay" src="https://store.flyce.cn/alipay.png" height="100px" />
              <span>支付宝</span>
         </div>
 
 
          <div>
-             <img alt="wechat" src="https://store.flyce.cn/wechat.png" height="150px" />
+             <img alt="wechat" src="https://store.flyce.cn/wechat.png" height="100px" />
              <span>微信</span>
          </div>
     </div>
@@ -31,10 +31,11 @@ const GlobalFooter = ({ className = 'globalFooter', links, copyright }) => {
                     ))}
                 </div>
             )}
+            <span>支持我们</span>
+            {content}
             {/*<Popover content={content} title="扫描二维码赞赏" trigger="hover">*/}
                 {/*<Button>支持我们</Button>*/}
             {/*</Popover>*/}
-            {content}
             {copyright && <div className={"copyright"}>{copyright}</div>}
         </div>
     );
