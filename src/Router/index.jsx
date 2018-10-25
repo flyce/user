@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import User from '../Pages/User';
 import Logout from '../Pages/Logout';
+import TimeLine from '../Pages/Timeline';
 
 class RouterIndex extends Component {
     render() {
@@ -17,6 +18,7 @@ class RouterIndex extends Component {
                     <Route path="/user/:path" component={User}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/user" component={User}/>
+                    <Route path="/timeline" component={TimeLine}/>
                     <Route component={NoMatch}/>
                 </Switch>
             </Router>

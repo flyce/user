@@ -11,6 +11,7 @@ import Cospas from "../../Components/Cospas";
 import Aircraft from "../../Components/Aircraft";
 import Radio from "../../Components/Radio";
 import RadioList from "../../Components/RadioList";
+import Caac from '../../Components/Caac';
 
 const User = (location) => {
     let content;
@@ -25,6 +26,7 @@ const User = (location) => {
         case 'aircraft': content = <Aircraft/>;break;
         case 'radio': content = <Radio />;break;
         case 'radiolist': content = <RadioList />;break;
+        case 'caac': content = <Caac />;break;
         default:  content = <div>
             Wrong path.
         </div>;

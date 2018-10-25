@@ -159,7 +159,7 @@ class Radio extends React.PureComponent {
                />
                <Tabs
                    defaultActiveKey="1"
-                   activeKey={this.state.activeKey}
+                   activeKey={this.state.activeKey + ''} // activekey excepetd String
                    onChange={this.onTabsChange}
                    tabBarExtraContent={operations}
                >

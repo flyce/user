@@ -409,6 +409,7 @@ class EltInfo extends React.Component {
         defaultCurrent: 1,
         modalVisible: false,
         create: false,
+        selectedRowKeys: [],
         value: {
             registration: '', model: '', selCall: '', exportNumber: '', exportDate: '',
             exportAirworthinessNumber: '', modeSCode: '', licenseNumber: '', licenseDate: '',
@@ -517,6 +518,7 @@ class EltInfo extends React.Component {
             if(response.success) {
                 message.info(response.info);
                 this.handleModalVisible();
+                this.setState({selectedRowKeys: 0});
                 this.init();
             } else {
                 message.error(response.info);
@@ -524,18 +526,50 @@ class EltInfo extends React.Component {
         });
     };
 
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({selectedRowKeys});
+    };
+
+
     render() {
         const columns = [{
             title: '注册号',
             key: 'registration',
-            render: (text) => ("B-" + text.registration)
+            render: (text) => ("B-" + text.registration),
+            sorter: (a, b) => a.registration > b.registration,
+            defaultSortOrder: 'ascend'
         }, {
             title: '机型',
             dataIndex: 'model',
             key: 'model',
+            filters: [{
+                text: 'B737-600',
+                value: 'B737-600',
+            }, {
+                text: 'B737-700',
+                value: 'B737-700',
+            }, {
+                text: 'B737-800',
+                value: 'B737-800',
+            }, {
+                text: 'B737-900',
+                value: 'B737-900',
+            }, {
+                text: 'A320-319',
+                value: 'A320-319',
+            }, {
+                text: 'A320-320',
+                value: 'A320-320',
+            }, {
+                text: 'A320-321',
+                value: 'A320-321',
+            }],
+            filterMultiple: true,
+            onFilter: (value, record) => record.category.indexOf(value) === 0,
         }, {
             title: '交付日期',
             dataIndex: 'exportDate',
+            sorter: (a, b) => a.exportDate - b.exportDate,
             render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
         }, {
             title: '发动机型号',
@@ -553,7 +587,6 @@ class EltInfo extends React.Component {
             title: "操作",
             render: (text, record) => (<Button onClick={
                 () => {
-                    console.log(record);
                     this.handleManage(record);
                     this.setState({create: false});
                     this.handleModalVisible(true);
@@ -570,6 +603,14 @@ class EltInfo extends React.Component {
             handleDelete: this.handleDelete,
             handleInit: this.init
         };
+
+        const { selectedRowKeys } = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+
+        const hasSelected = selectedRowKeys.length > 0;
 
         return (
             <Card bordered={false}>
@@ -595,8 +636,18 @@ class EltInfo extends React.Component {
                     }}
                 >
                     导出
+                </Button>&nbsp;&nbsp;
+                <Button
+                    ghost
+                    type="danger"
+                    onClick={() => {
+                        this.handleDelete(this.state.selectedRowKeys)
+                    }}
+                    disabled={!hasSelected}
+                >
+                    删除
                 </Button>
-                <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey value={this.state.value} create={this.state.create}/>
+                <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
                 <Table
                     dataSource={this.state.data}
                     loading={this.state.isLoading}
@@ -607,6 +658,7 @@ class EltInfo extends React.Component {
                         total: this.state.count,
                         onChange:this.onChange
                     }}
+                    rowSelection={rowSelection}
                     size="middle" />
             </Card>
         );

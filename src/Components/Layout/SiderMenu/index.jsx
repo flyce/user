@@ -87,6 +87,11 @@ class SiderMenu extends PureComponent {
                                 <Link to={"cospass"}/>
                             </Menu.Item>
                         </SubMenu>
+                        <Menu.Item key="caac">
+                            <Icon type="file-pdf" />
+                            <span className="nav-text">局方文件查询</span>
+                            <Link to={"caac"}/>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
             </div>
