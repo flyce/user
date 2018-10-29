@@ -47,23 +47,27 @@ class RadioList extends React.Component {
         const columns = [{
             title: '注册号',
             key: 'registration',
-            render: (text) => ("B-" + text.registration)
+            render: (text) => ("B-" + text.registration),
+            sorter: (a, b) => a.registration - b.registration,
         }, {
             title: '电台执照号',
             dataIndex: 'licenseNumber',
             key: 'licenseNumber',
+            sorter: (a, b) => a.licenseNumber - b.licenseNumber,
         }, {
             title: '选呼号',
             dataIndex: 'selCall',
-            key: 'selCall',
+            key: 'selCall'
         }, {
             title: 'S模式编码',
             dataIndex: 'modeSCode',
-            key: 'modeSCode',
+            key: 'modeSCode'
         }, {
             title: '有效期',
             dataIndex: 'licenseDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
+            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString()),
+            sorter: (a, b) => a.licenseDate - b.licenseDate,
+            defaultSortOrder: 'ascend',
         }];
 
         return (

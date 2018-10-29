@@ -39,7 +39,6 @@ const CreateForm = Form.create()(props => {
 class AdRule extends Component {
     state = {
         modalVisible: false,
-        isLoading: true,
         data: [{
             rule: "MULT",
             status: true,
@@ -90,8 +89,7 @@ class AdRule extends Component {
         get('user/adrule').then((res) => {
             if(res.success) {
                 this.setState({
-                    data: res.rule,
-                    isLoading: false
+                    data: res.rule
                 });
             } else {
                 message.error(res.info);
@@ -156,12 +154,6 @@ class AdRule extends Component {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
         };
-
-        if (this.state.isLoading) {
-            return (
-                <div>Loading</div>
-            );
-        }
 
         return (
             <div>

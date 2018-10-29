@@ -84,7 +84,7 @@ class BaseInfo extends React.PureComponent {
             customRequest:  (info) => {
                 const data = new FormData();
                 data.append('elt', info.file);
-                file(data).then((response) => {
+                file(data, 'elt').then((response) => {
                     if(response.success) {
                         this.open(response.data);
                     } else {

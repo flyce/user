@@ -36,6 +36,11 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">个人中心</span>
                             <Link to={"center"}/>
                         </Menu.Item>
+                        <Menu.Item key="disclaimer">
+                            <Icon type="exception" />
+                            <span className="nav-text">免责申明</span>
+                            <Link to={"disclaimer"}/>
+                        </Menu.Item>
                         <Menu.Item key="aircraft">
                             <Icon><i className="iconfont icon-plane" style={{ fontSize: 16 }}></i></Icon>
                             <span className="nav-text">航空器信息</span>
@@ -70,16 +75,21 @@ class SiderMenu extends PureComponent {
                                 <Link to={"radiolist"}/>
                             </Menu.Item>
                         </SubMenu>
-                        <SubMenu key="elt" title={<span><Icon type="clock-circle-o" /><span>ELT管理</span></span>}>
+                        <SubMenu key="elt" title={<span><Icon type="rocket" /><span>ELT管理</span></span>}>
+                            <Menu.Item key="elt">
+                                <Icon type="clock-circle-o" />
+                                <span className="nav-text">到期预警</span>
+                                <Link to={"elt"}/>
+                            </Menu.Item>
                             <Menu.Item key="eltinfo">
                                 <Icon type="folder" />
                                 <span className="nav-text">基本信息</span>
                                 <Link to={"eltinfo"}/>
                             </Menu.Item>
-                            <Menu.Item key="import">
+                            <Menu.Item key="eltimport">
                                 <Icon type="file-excel" />
                                 <span className="nav-text">ELT录入</span>
-                                <Link to={"import"}/>
+                                <Link to={"eltimport"}/>
                             </Menu.Item>
                             <Menu.Item key="cospass">
                                 <Icon type="bulb" />
@@ -91,6 +101,11 @@ class SiderMenu extends PureComponent {
                             <Icon type="file-pdf" />
                             <span className="nav-text">局方文件查询</span>
                             <Link to={"caac"}/>
+                        </Menu.Item>
+                        <Menu.Item key="timeline">
+                            <Icon type="exception" />
+                            <span className="nav-text">开发日志 V2.1</span>
+                            <Link to={"timeline"}/>
                         </Menu.Item>
                     </Menu>
                 </Sider>

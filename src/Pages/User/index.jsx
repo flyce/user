@@ -12,6 +12,8 @@ import Aircraft from "../../Components/Aircraft";
 import Radio from "../../Components/Radio";
 import RadioList from "../../Components/RadioList";
 import Caac from '../../Components/Caac';
+import Time from '../../Pages/Timeline';
+import EltWatcher from '../../Components/EltWatcher';
 
 const User = (location) => {
     let content;
@@ -21,12 +23,14 @@ const User = (location) => {
         case 'info': content = <SubscribeManage/>; break;
         case 'center': content = <PersonalCenter/>; break;
         case 'eltinfo': content = <EltInfo/>; break;
-        case 'import': content = <EltImport/>; break;
+        case 'elt': content = <EltWatcher />;break;
+        case 'eltimport': content = <EltImport/>; break;
         case 'cospass': content = <Cospas/>; break;
         case 'aircraft': content = <Aircraft/>;break;
         case 'radio': content = <Radio />;break;
         case 'radiolist': content = <RadioList />;break;
         case 'caac': content = <Caac />;break;
+        case 'timeline': content = <Time />;break;
         default:  content = <div>
             Wrong path.
         </div>;

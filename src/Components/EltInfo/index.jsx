@@ -350,15 +350,26 @@ class EltInfo extends React.Component {
         const columns = [{
             title: '注册号',
             key: 'registration',
-            render: (text) => ("B-" + text.registration)
+            render: (text) => ("B-" + text.registration),
+            sorter: (a, b) => a.registration - b.registration
         }, {
             title: 'ELT编码',
             dataIndex: 'code',
             key: 'code',
+            sorter: (a, b) => a.code - b.code
         }, {
             title: '类型',
             dataIndex: 'type',
             key: 'type',
+            filters: [{
+                text: '便携式',
+                value: '便携',
+            }, {
+                text: '固定式',
+                value: '固定',
+            }],
+            filterMultiple: false,
+            onFilter: (value, record) => record.type.indexOf(value) === 0,
         }, {
             title: 'ELT协议',
             dataIndex: 'protocol',
@@ -370,7 +381,8 @@ class EltInfo extends React.Component {
         }, {
             title: '有效期',
             dataIndex: 'effectiveDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
+            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString()),
+            sorter: (a, b) => a.effectiveDate - b.effectiveDate,
         }, {
             title: '设备型号',
             dataIndex: 'equipment',

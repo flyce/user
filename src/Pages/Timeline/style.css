@@ -1,11 +1,9 @@
-.timeline {
-    width: 413px;
-}
+/*.timeline {*/
+    /*width: 365px;*/
+/*}*/
 
 .time {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }

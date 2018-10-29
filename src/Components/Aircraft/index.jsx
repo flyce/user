@@ -101,6 +101,35 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
+                    label="出厂序号"
+                    className="item offset"
+                    hasFeedback
+                >
+                    {form.getFieldDecorator('exportNumber', {
+                        rules: [{
+                            type: 'string', message: '请输入出厂序号',
+                        }],
+                        initialValue: value.exportNumber
+                    })(
+                        <Input placeholder="请输入出厂序号"/>
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="出厂日期"
+                    className="item"
+                >
+                    {form.getFieldDecorator('exportDate', {
+                        rules: [{
+                            required: true, message: '请选择飞机出厂日期',
+                        }],
+                        initialValue: moment.unix(value.exportDate)
+                    })(
+                        <DatePicker placeholder="请选择飞机出厂日期" style={{ width: '100%' }} />
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
                     label="选呼号码"
                     className="item offset"
                     hasFeedback
@@ -117,52 +146,8 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="出厂序号"
-                    className="item"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('exportNumber', {
-                        rules: [{
-                            type: 'string', message: '请输入出厂序号',
-                        }],
-                        initialValue: value.exportNumber
-                    })(
-                        <Input placeholder="请输入出厂序号"/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="出厂日期"
-                    className="item offset"
-                >
-                    {form.getFieldDecorator('exportDate', {
-                        rules: [{
-                            required: true, message: '请选择飞机出厂日期',
-                        }],
-                        initialValue: moment.unix(value.exportDate)
-                    })(
-                        <DatePicker placeholder="请选择飞机出厂日期" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="出口适航证号"
-                    className="item offset"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('exportAirworthinessNumber', {
-                        rules: [{
-                            type: 'string', message: '请输入出口适航证号',
-                        }],
-                        initialValue: value.exportAirworthinessNumber
-                    })(
-                        <Input placeholder="请输入出口适航证号"/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
                     label="S模式编码"
-                    className="item"
+                    className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('modeSCode', {
@@ -177,7 +162,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="电台执照号"
-                    className="item offset"
+                    className="item"
                     hasFeedback
                 >
                     {form.getFieldDecorator('licenseNumber', {
@@ -205,21 +190,6 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="出口噪音合格证号"
-                    className="item"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('exportNoiseNumber', {
-                        rules: [{
-                            type: 'string', message: '请输入出口噪音合格证号',
-                        }],
-                        initialValue: value.exportNoiseNumber
-                    })(
-                        <Input placeholder="请输入出口噪音合格证号"/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
                     label="国籍证号"
                     className="item offset"
                     hasFeedback
@@ -236,7 +206,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="国籍证颁发日期"
-                    className="item offset"
+                    className="item"
                 >
                     {form.getFieldDecorator('citizenshipDate', {
                         rules: [{
@@ -250,7 +220,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="适航证号"
-                    className="item"
+                    className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('airworthinessNumber', {
@@ -276,6 +246,37 @@ const CreateForm = Form.create()((props) => {
                         <DatePicker placeholder="请选择适航证颁发日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="出口适航证号"
+                    className="item"
+                    hasFeedback
+                >
+                    {form.getFieldDecorator('exportAirworthinessNumber', {
+                        rules: [{
+                            type: 'string', message: '请输入出口适航证号',
+                        }],
+                        initialValue: value.exportAirworthinessNumber
+                    })(
+                        <Input placeholder="请输入出口适航证号"/>
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="出口噪音合格证号"
+                    className="item offset"
+                    hasFeedback
+                >
+                    {form.getFieldDecorator('exportNoiseNumber', {
+                        rules: [{
+                            type: 'string', message: '请输入出口噪音合格证号',
+                        }],
+                        initialValue: value.exportNoiseNumber
+                    })(
+                        <Input placeholder="请输入出口噪音合格证号"/>
+                    )}
+                </FormItem>
+
                 <FormItem
                     {...formItemLayout}
                     label="发动机型号"
@@ -615,38 +616,47 @@ class EltInfo extends React.Component {
         return (
             <Card bordered={false}>
                 <LoginVerify/>
-                <Button onClick={() => {
-                    this.handleManage({
-                        registration: "",
-                        model: "",
-                        selCall: "",
-                        modeSCode: "",
-                        licenseDate: moment.unix(Date.now() / 1000000),
-                        exportDate: moment.unix(Date.now() / 1000000),
-                        citizenshipDate: moment.unix(Date.now() / 1000000),
-                        airworthinessDate: moment.unix(Date.now() / 1000000)
-                    });
-                    this.setState({create: true});
-                    this.handleModalVisible(true);
-                }}>新建</Button>&nbsp;&nbsp;
-                <Button
-                    onClick={() => {
-                        downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                        message.info("导出中，请稍后！");
-                    }}
-                >
-                    导出
-                </Button>&nbsp;&nbsp;
-                <Button
-                    ghost
-                    type="danger"
-                    onClick={() => {
-                        this.handleDelete(this.state.selectedRowKeys)
-                    }}
-                    disabled={!hasSelected}
-                >
-                    删除
-                </Button>
+                <div style={{marginBottom: 10}}>
+                    <Button onClick={() => {
+                        this.handleManage({
+                            registration: "",
+                            model: "",
+                            selCall: "",
+                            modeSCode: "",
+                            licenseDate: moment.unix(Date.now() / 1000000),
+                            exportDate: moment.unix(Date.now() / 1000000),
+                            citizenshipDate: moment.unix(Date.now() / 1000000),
+                            airworthinessDate: moment.unix(Date.now() / 1000000)
+                        });
+                        this.setState({create: true});
+                        this.handleModalVisible(true);
+                    }}>新建</Button>&nbsp;&nbsp;
+                    <Button
+                        onClick={() => {
+                            message.info("开发中...");
+                        }}
+                    >
+                        导入
+                    </Button>&nbsp;&nbsp;
+                    <Button
+                        onClick={() => {
+                            downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
+                            message.info("导出中，请稍后！");
+                        }}
+                    >
+                        导出
+                    </Button>&nbsp;&nbsp;
+                    <Button
+                        ghost
+                        type="danger"
+                        onClick={() => {
+                            this.handleDelete(this.state.selectedRowKeys)
+                        }}
+                        disabled={!hasSelected}
+                    >
+                        删除
+                    </Button>
+                </div>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
                 <Table
                     dataSource={this.state.data}

@@ -7,8 +7,7 @@ import './style.css';
 
 class SubscribeManage extends React.PureComponent {
     state = {
-        info: null,
-        isLoading: true
+        info: null
     };
 
     componentDidMount() {
@@ -20,8 +19,7 @@ class SubscribeManage extends React.PureComponent {
                         receivedcad: response.receivedcad,
                         receivedad: response.receivedad,
                         subscribe: response.subscribe,
-                        subscribeExpireTime: response.subscribeExpireTime,
-                        isLoading: false,
+                        subscribeExpireTime: response.subscribeExpireTime
                     });
                 } else {
                     message.error(response.info);
@@ -63,11 +61,24 @@ class SubscribeManage extends React.PureComponent {
         });
     }
 
+    handleChangeNote() {
+        const { receivednote } = this.state;
+        this.setState({
+            receivednote: !receivednote
+        });
+        post('user/info', {
+            receivednote: !receivednote
+        }).then((response) => {
+            if(response.success) {
+                message.success(response.info);
+            } else {
+                message.error(response.info);
+            }
+        });
+    }
+
     render () {
-        if(this.state.isLoading) {
-            return <div>Loading...</div>
-        }
-        const { mail, receivedcad, receivedad } = this.state;
+        const { mail, receivedcad, receivedad, receivednote } = this.state;
         return (
             <Card bordered={false}>
                 <LoginVerify/>
@@ -107,6 +118,19 @@ class SubscribeManage extends React.PureComponent {
                                         checkedChildren="开"
                                         unCheckedChildren="关"
                                         onClick={this.handleChangeAd.bind(this)}
+                                    />
+                                </span>
+                            </p>
+                        </Row>
+                        <Row>
+                            <p>
+                                <span>CAAC 信息订阅:</span>
+                                <span>
+                                    <Switch
+                                        checked={receivednote}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeNote.bind(this)}
                                     />
                                 </span>
                             </p>

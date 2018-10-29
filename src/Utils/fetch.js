@@ -50,7 +50,7 @@ export function post(url, json, containUserInfo = true) {
     return result;
 }
 
-export function file(data) {
+export function file(data, path) {
     const option ={
         method: 'post',
         headers: {
@@ -58,7 +58,7 @@ export function file(data) {
         },
         body:data
     };
-    const result = fetch(config.url + 'user/upload', option).then(function (response) {
+    const result = fetch(config.url + 'user/'+ path +'/upload', option).then(function (response) {
         return response.json();
     });
 
