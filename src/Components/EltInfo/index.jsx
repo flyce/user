@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, Select, DatePic
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import {get, post, downloadFile } from '../../Utils/fetch';
+import { get, post, downloadFile } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

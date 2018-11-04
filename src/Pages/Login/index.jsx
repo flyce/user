@@ -34,7 +34,7 @@ class NLoginForm extends Component {
             // if (admin) {
             //     history.push("admin/user");
             // } else {
-                history.push("user/center")
+                history.push("dashboard/center")
             // }
         }
     }
@@ -85,13 +85,10 @@ class NLoginForm extends Component {
                     if (response.success) {
                         message.success("登录成功");
                         setItem("token", response.token);
-                        setItem("username", this.state.username);
-                        setItem("_id", response._id);
-                        setItem("admin", response.admin);
                         setItem("loginTime", Math.floor(Date.now()/1000));
                         const token = getItem("token");
                         if (token.length > 0) {
-                            history.push("user/center");
+                            history.push("dashboard/center");
                             notification.open({
                                 message: '重要通知',
                                 duration: 15,

@@ -6,15 +6,15 @@ import { message } from "antd/lib/index";
 const TabPane = Tabs.TabPane;
 const Search = Input.Search;
 
-class Radio extends React.PureComponent {
+class License extends React.PureComponent {
     state = {
         isLoading: true,
         data: null,
         count: 0,
         defaultCurrent: 1,
-        count15: 0,
         count30: 0,
         count60: 0,
+        count90: 0,
         activeKey: "1",
         note: '自定义天数查询',
         date: 0
@@ -23,7 +23,7 @@ class Radio extends React.PureComponent {
     componentDidMount() {
         this.onTabsChange(1);
         this.init();
-        get('user/count?db=radio').then(res => {
+        get('user/count?db=license').then(res => {
             if(res.success) {
                 this.setState({
                     count: res.count
@@ -35,12 +35,12 @@ class Radio extends React.PureComponent {
     }
 
     init = () => {
-        get('user/eltwatcher').then(res => {
+        get('user/licensewatcher').then(res => {
             if(res.success) {
                 this.setState({
-                    count15: res.count15,
                     count30: res.count30,
-                    count60: res.count60
+                    count60: res.count60,
+                    count90: res.count90
                 })
             } else {
                 message.error(res.info);
@@ -49,10 +49,10 @@ class Radio extends React.PureComponent {
     };
 
     onChange = (page) => {
-        get('user/elt?skip=' + (page - 1)).then((res) => {
+        get('user/license?skip=' + (page - 1)).then((res) => {
             if(res.success) {
                 this.setState({
-                    data: res.elt,
+                    data: res.data,
                     defaultCurrent: page,
                     isLoading: false
                 });
@@ -63,11 +63,11 @@ class Radio extends React.PureComponent {
     };
 
     onTabsChange = (tab, date) => {
-        let limit = 15;
+        let limit = 30;
         switch (tab) {
-            case "1": limit = 15;break;
-            case "2": limit = 30;break;
-            case "3": limit = 60;break;
+            case "1": limit = 30;break;
+            case "2": limit = 60;break;
+            case "3": limit = 90;break;
             case "4": limit = date;break;
             default: break;
         }
@@ -75,10 +75,10 @@ class Radio extends React.PureComponent {
             activeKey: tab,
             date
         });
-        get('user/elt?skip=' + (this.state.defaultCurrent - 1) + "&date=" + limit).then((res) => {
+        get('user/license?skip=' + (this.state.defaultCurrent - 1) + "&date=" + limit).then((res) => {
             if(res.success) {
                 this.setState({
-                    data: res.elt,
+                    data: res.data,
                     isLoading: false
                 });
             } else {
@@ -90,63 +90,55 @@ class Radio extends React.PureComponent {
     render() {
         const data = [
             {
-                title: '15天内到期',
+                title: '30天内到期',
                 class: 'error'
             },
             {
-                title: '30天内到期',
+                title: '60天内到期',
                 class: 'warning'
             },
             {
-                title: '60天内到期',
+                title: '90天内到期',
                 class: 'caution'
             },
         ];
 
         const { isLoading, note } = this.state;
         const columns = [{
-            title: '注册号',
-            key: 'registration',
-            render: (text) => ("B-" + text.registration),
-            onFilter: (value, record) => record.registration.indexOf(value) === 0,
-            sorter: (a, b) => a.registration - b.registration,
+            title: '姓名',
+            key: 'name',
+            dataIndex: 'name',
+            sorter: (a, b) => a.name > b.name,
+            defaultSortOrder: 'ascend'
         }, {
-            title: 'ELT编码',
-            dataIndex: 'code',
-            key: 'code',
-            sorter: (a, b) => a.code - b.code,
+            title: '中心',
+            dataIndex: 'center',
+            key: 'center',
         }, {
-            title: '类型',
-            dataIndex: 'type',
-            key: 'type',
-            filters: [{
-                text: '便携式',
-                value: '便携',
-            }, {
-                text: '固定式',
-                value: '固定',
-            }],
-            filterMultiple: false,
-            onFilter: (value, record) => record.type.indexOf(value) === 0,
+            title: '执照类型',
+            dataIndex: 'licenseType',
+            key: 'licenseType',
+            sorter: (a, b) => a.licenseType - b.licenseType,
         }, {
-            title: '制造商',
-            dataIndex: 'manufacturer',
-            key: 'manufacturer',
+            title: '最新一次颁发/续签日期',
+            dataIndex: 'lastIssuedDate',
+            key: 'lastIssuedDate',
+            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
         }, {
-            title: '有效期',
-            dataIndex: 'effectiveDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString()),
-            sorter: (a, b) => a.effectiveDate - b.effectiveDate,
+            title: '执照到期日期',
+            dataIndex: 'expirationDate',
+            key: 'expirationDate',
+            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
         }, {
             title: '剩余天数',
-            render: (text) =>  Math.floor((text.effectiveDate-Math.floor(Date.now() / 1000)) / 24 / 3600)
+            render: (text) =>  Math.floor((text.expirationDate-Math.floor(Date.now() / 1000)) / 24 / 3600)
         }];
 
         const operations = <Button
             size="small"
             onClick={() => {
-                let date = this.state.activeKey === '1' ? 15 : this.state.activeKey === '2' ? 30 : this.state.activeKey === '3' ? 60 : this.state.date;
-                let note = this.state.activeKey === '1' ? "15_days" : this.state.activeKey === '2' ? "30_days" : this.state.activeKey === '3' ? "60_days" : "customer";
+                let date = this.state.activeKey === '1' ? 30 : this.state.activeKey === '2' ? 60 : this.state.activeKey === '3' ? 90 : this.state.date;
+                let note = this.state.activeKey === '1' ? "30_days" : this.state.activeKey === '2' ? "60_days" : this.state.activeKey === '3' ? "90_days" : "customer";
                 downloadFile("user/export/radio?date=" + date, "Radio_List_Expires_in_" + note + "_" + new Date().toLocaleDateString());
                 message.info("导出中，请稍后！");
             }}
@@ -167,7 +159,7 @@ class Radio extends React.PureComponent {
                                     <a onClick={(event) => {
                                         this.onTabsChange(event.target.id);
                                     }} className={item.class} id={key + 1}>
-                                        {key === 0 ? this.state.count15 : key === 1? this.state.count30 :this.state.count60}
+                                        {key === 0 ? this.state.count30 : key === 1? this.state.count60 :this.state.count90}
                                     </a>
                                 </div>
                             </Card>
@@ -198,13 +190,13 @@ class Radio extends React.PureComponent {
                     onChange={this.onTabsChange}
                     tabBarExtraContent={operations}
                 >
-                    <TabPane tab={<span>15天内到期</span>} key="1">
+                    <TabPane tab={<span>30天内到期</span>} key="1">
                         <div/>
                     </TabPane>
-                    <TabPane tab={<span>30天内到期</span>} key="2">
+                    <TabPane tab={<span>60天内到期</span>} key="2">
                         <div/>
                     </TabPane>
-                    <TabPane tab={<span>60天内到期</span>} key="3">
+                    <TabPane tab={<span>90天内到期</span>} key="3">
                         <div/>
                     </TabPane>
                     <TabPane tab={<span>{note}</span>} key="4" disabled>
@@ -229,4 +221,4 @@ class Radio extends React.PureComponent {
     }
 }
 
-export default Radio;
+export default License;

@@ -14,27 +14,34 @@ import RadioList from "../../Components/RadioList";
 import Caac from '../../Components/Caac';
 import Time from '../../Pages/Timeline';
 import EltWatcher from '../../Components/EltWatcher';
+import Disclaimer from '../../Components/Disclaimer';
+import LicenseList from '../../Components/LicenseList';
+import License from '../../Components/License';
 
 const User = (location) => {
-    let content;
-    switch (location.match.params.path) {
-        case 'cadrule': content = <CadRule/>; break;
-        case 'adrule': content = <AdRule/>; break;
-        case 'info': content = <SubscribeManage/>; break;
-        case 'center': content = <PersonalCenter/>; break;
-        case 'eltinfo': content = <EltInfo/>; break;
-        case 'elt': content = <EltWatcher />;break;
-        case 'eltimport': content = <EltImport/>; break;
-        case 'cospass': content = <Cospas/>; break;
-        case 'aircraft': content = <Aircraft/>;break;
-        case 'radio': content = <Radio />;break;
-        case 'radiolist': content = <RadioList />;break;
-        case 'caac': content = <Caac />;break;
-        case 'timeline': content = <Time />;break;
-        default:  content = <div>
-            Wrong path.
-        </div>;
-    }
+
+    // router list
+    const data = {
+        "cadrule": <CadRule/>,
+        "adrule": <AdRule/>,
+        "info": <SubscribeManage/>,
+        "center": <PersonalCenter/>,
+        "eltinfo": <EltInfo/>,
+        "elt": <EltWatcher />,
+        "eltimport": <EltImport/>,
+        "cospass": <Cospas/>,
+        "aircraft": <Aircraft/>,
+        "radio": <Radio />,
+        "radiolist": <RadioList />,
+        "caac": <Caac />,
+        "timeline": <Time />,
+        "disclaimer": <Disclaimer />,
+        "licenselist": <LicenseList />,
+        "license": <License />
+    };
+
+    let content = data[location.match.params.path] ?
+        data[location.match.params.path] : <div>Wrong path.</div>;
 
     return (
         <Layout content={content} path={location.match.params.path}/>

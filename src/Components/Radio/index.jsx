@@ -1,9 +1,10 @@
 import React from 'react';
-import { Row, Card, List, Tabs, Table, Button } from 'antd';
+import { Row, Card, List, Tabs, Table, Button, Input } from 'antd';
 import "./style.css";
-import {downloadFile, get} from "../../Utils/fetch";
+import { downloadFile, get} from "../../Utils/fetch";
 import { message } from "antd/lib/index";
 
+const Search = Input.Search;
 const TabPane = Tabs.TabPane;
 
 class Radio extends React.PureComponent {
@@ -15,7 +16,9 @@ class Radio extends React.PureComponent {
         count15: 0,
         count30: 0,
         count60: 0,
-        activeKey: "1"
+        activeKey: "1",
+        note: '自定义天数查询',
+        date: 0
     };
 
     componentDidMount() {
@@ -60,12 +63,13 @@ class Radio extends React.PureComponent {
         });
     };
 
-    onTabsChange = (tab) => {
+    onTabsChange = (tab, date) => {
         let limit = 15;
         switch (tab) {
             case "1": limit = 15;break;
             case "2": limit = 30;break;
             case "3": limit = 60;break;
+            case "4": limit = date;break;
             default: break;
         }
         this.setState({
@@ -75,6 +79,7 @@ class Radio extends React.PureComponent {
             if(res.success) {
                 this.setState({
                     data: res.radio,
+                    date,
                     isLoading: false
                 });
             } else {
@@ -99,7 +104,7 @@ class Radio extends React.PureComponent {
             },
         ];
 
-        const { isLoading } = this.state;
+        const { isLoading, note } = this.state;
         const columns = [{
             title: '注册号',
             key: 'registration',
@@ -131,8 +136,8 @@ class Radio extends React.PureComponent {
         const operations = <Button
                 size="small"
                 onClick={() => {
-                    let date = this.state.activeKey === '1' ? 15 : this.state.activeKey === '2' ? 30 : 60;
-                    let note = this.state.activeKey === '1' ? "15_days" : this.state.activeKey === '2' ? "30_days" : "60_days";
+                    let date = this.state.activeKey === '1' ? 15 : this.state.activeKey === '2' ? 30 : this.state.activeKey === '3' ? 60 : this.state.date;
+                    let note = this.state.activeKey === '1' ? "15_days" : this.state.activeKey === '2' ? "30_days" : this.state.activeKey === '3' ? "60_days" : "customer";
                     downloadFile("user/export/radio?date=" + date, "Radio_List_Expires_in_" + note + "_" + new Date().toLocaleDateString());
                     message.info("导出中，请稍后！");
                 }}
@@ -160,6 +165,24 @@ class Radio extends React.PureComponent {
                        </List.Item>
                    )}
                />
+               <Search
+                   placeholder="自定义天数查询"
+                   onSearch={value => {
+                       if(value.length === 0) {
+                           message.error("输入剩余日期再查询");
+                       } else {
+                           this.setState({
+                               activeKey: '4',
+                               note: value + '天内到期'
+                           });
+                           this.onTabsChange("4", value);
+                       }
+                   }}
+                   type="number"
+                   enterButton="查询"
+                   size="large"
+                   style={{marginBottom: '10px'}}
+               />
                <Tabs
                    defaultActiveKey="1"
                    activeKey={this.state.activeKey + ''} // activekey excepetd String
@@ -173,6 +196,9 @@ class Radio extends React.PureComponent {
                        <div/>
                    </TabPane>
                    <TabPane tab={<span>60天内到期</span>} key="3">
+                       <div/>
+                   </TabPane>
+                   <TabPane tab={<span>{note}</span>} key="4" disabled>
                        <div/>
                    </TabPane>
                </Tabs>

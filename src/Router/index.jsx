@@ -14,7 +14,7 @@ class RouterIndex extends Component {
                     <Route exact path="/" component={Login}/>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
-                    <Route path="/user/:path" component={User}/>
+                    <Route path="/dashboard/:path" component={User}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/user" component={User}/>
                     <Route component={NoMatch}/>

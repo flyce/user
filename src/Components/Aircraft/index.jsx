@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm } from 'antd';
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
+import UploadModal from '../UploadModal';
 
 import { downloadFile, get, post } from '../../Utils/fetch';
 
@@ -417,7 +418,9 @@ class EltInfo extends React.Component {
             exportNoiseNumber: '', citizenshipNumber: '', citizenshipDate: '',
             airworthinessNumber: '', airworthinessDate: '', engineModel: '',
             engine1: '', engine2: '', engine3: '', engine4: '', cabinConfiguration: ''
-        }
+        },
+
+        uploadVisible: false
     };
 
     init = () =>  {
@@ -457,6 +460,12 @@ class EltInfo extends React.Component {
             } else {
                 message.error(res.info);
             }
+        });
+    };
+
+    handleUploadModalVisible = (flag) => {
+        this.setState({
+            uploadVisible: !!flag,
         });
     };
 
@@ -597,12 +606,16 @@ class EltInfo extends React.Component {
 
         }];
 
-        const parentMethods = {
+        const parentCreateMethods = {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
             handleUpdate: this.handleUpdate,
             handleDelete: this.handleDelete,
             handleInit: this.init
+        };
+
+        const parentUploadMethods = {
+            handleUploadModalVisible: this.handleUploadModalVisible,
         };
 
         const { selectedRowKeys } = this.state;
@@ -633,7 +646,7 @@ class EltInfo extends React.Component {
                     }}>新建</Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            message.info("开发中...");
+                           this.handleUploadModalVisible(true);
                         }}
                     >
                         导入
@@ -657,7 +670,8 @@ class EltInfo extends React.Component {
                         删除
                     </Button>
                 </div>
-                <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
+                <CreateForm {...parentCreateMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
+                <UploadModal {...parentUploadMethods} visible={this.state.uploadVisible} tableName="aircraft"/>
                 <Table
                     dataSource={this.state.data}
                     loading={this.state.isLoading}
