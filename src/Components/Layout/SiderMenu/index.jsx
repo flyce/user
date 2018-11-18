@@ -50,10 +50,10 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">航空器信息</span>
                             <Link to={"aircraft"}/>
                         </Menu.Item>
-                        <SubMenu key="ad" title={<span><Icon type="mail" /><span>信息订阅管理</span></span>}>
+                        <SubMenu key="ad" title={<span><Icon type="mail" /><span>订阅管理</span></span>}>
                             <Menu.Item key="info">
                                 <Icon type="desktop" />
-                                <span className="nav-text">订阅管理</span>
+                                <span className="nav-text">订阅方式管理</span>
                                 <Link to={"info"}/>
                             </Menu.Item>
                             <Menu.Item key="cadrule">
@@ -79,6 +79,11 @@ class SiderMenu extends PureComponent {
                                 <Link to={"licenselist"}/>
                             </Menu.Item>
                         </SubMenu>
+                        <Menu.Item key="authorization">
+                            <Icon type="profile" />
+                            <span className="nav-text">人员授权管理&nbsp;&nbsp;<sup>new</sup></span>
+                            <Link to={"authorization"}/>
+                        </Menu.Item>
                         <SubMenu key="ra" title={<span><Icon type="wifi" /><span>电台执照管理</span></span>}>
                             <Menu.Item key="radio">
                                 <Icon type="disconnect" />

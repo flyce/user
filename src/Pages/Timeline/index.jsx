@@ -36,6 +36,8 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>创建短信提醒功能 2018-10-25</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>创建Timeline 2018-10-29</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>创建免责申明 创建ELT和无线电台执照自定义到期时间查询 2018-10-31</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员执照管理功能 导入导出还有问题需要解决 2018-11-4</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员授权管理功能 2018-11-18</Timeline.Item>
             </Timeline>
         </Card>
     </div>

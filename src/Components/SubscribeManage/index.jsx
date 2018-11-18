@@ -18,6 +18,8 @@ class SubscribeManage extends React.PureComponent {
                         mail: response.mail,
                         receivedcad: response.receivedcad,
                         receivedad: response.receivedad,
+                        receivednote: response.receivednote,
+                        receivedmessage: response.receivedmessage,
                         subscribe: response.subscribe,
                         subscribeExpireTime: response.subscribeExpireTime
                     });
@@ -76,9 +78,24 @@ class SubscribeManage extends React.PureComponent {
             }
         });
     }
+    handleChangeMessage() {
+        const { receivedmessage } = this.state;
+        this.setState({
+            receivedmessage: !receivedmessage
+        });
+        post('user/info', {
+            receivedmessage: !receivedmessage
+        }).then((response) => {
+            if(response.success) {
+                message.success(response.info);
+            } else {
+                message.error(response.info);
+            }
+        });
+    }
 
     render () {
-        const { mail, receivedcad, receivedad, receivednote } = this.state;
+        const { mail, receivedcad, receivedad, receivednote, receivedmessage } = this.state;
         return (
             <Card bordered={false}>
                 <LoginVerify/>
@@ -131,6 +148,20 @@ class SubscribeManage extends React.PureComponent {
                                         checkedChildren="开"
                                         unCheckedChildren="关"
                                         onClick={this.handleChangeNote.bind(this)}
+                                    />
+                                </span>
+                            </p>
+                        </Row>
+                        <Row>
+                            <p>
+                                <span>短信提醒: <sub>(仅到期提醒和您按规则定制的CAD/EASA AD内容会通过短信的方式提醒您)</sub></span>
+                                <span>
+                                    <Switch
+                                        disabled
+                                        checked={receivedmessage}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeMessage.bind(this)}
                                     />
                                 </span>
                             </p>

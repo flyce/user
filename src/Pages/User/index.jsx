@@ -17,6 +17,7 @@ import EltWatcher from '../../Components/EltWatcher';
 import Disclaimer from '../../Components/Disclaimer';
 import LicenseList from '../../Components/LicenseList';
 import License from '../../Components/License';
+import Authorization from '../../Components/Authorization';
 
 const User = (location) => {
 
@@ -37,7 +38,8 @@ const User = (location) => {
         "timeline": <Time />,
         "disclaimer": <Disclaimer />,
         "licenselist": <LicenseList />,
-        "license": <License />
+        "license": <License />,
+        "authorization": <Authorization />
     };
 
     let content = data[location.match.params.path] ?
