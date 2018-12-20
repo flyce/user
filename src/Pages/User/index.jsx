@@ -11,13 +11,14 @@ import Cospas from "../../Components/Cospas";
 import Aircraft from "../../Components/Aircraft";
 import Radio from "../../Components/Radio";
 import RadioList from "../../Components/RadioList";
-import Caac from '../../Components/Caac';
+import Document from '../../Components/Document';
 import Time from '../../Pages/Timeline';
 import EltWatcher from '../../Components/EltWatcher';
 import Disclaimer from '../../Components/Disclaimer';
 import LicenseList from '../../Components/LicenseList';
 import License from '../../Components/License';
 import Authorization from '../../Components/Authorization';
+import CadQuery from '../../Components/CadQuery';
 
 const User = (location) => {
 
@@ -34,12 +35,13 @@ const User = (location) => {
         "aircraft": <Aircraft/>,
         "radio": <Radio />,
         "radiolist": <RadioList />,
-        "caac": <Caac />,
+        "document": <Document />,
         "timeline": <Time />,
         "disclaimer": <Disclaimer />,
         "licenselist": <LicenseList />,
         "license": <License />,
-        "authorization": <Authorization />
+        "authorization": <Authorization />,
+        "cadquery": <CadQuery />
     };
 
     let content = data[location.match.params.path] ?

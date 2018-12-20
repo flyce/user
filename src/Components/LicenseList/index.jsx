@@ -412,7 +412,7 @@ class LicenseList extends React.Component {
                     <Button
                         onClick={() => {
                             // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                            message.info("开发中...");
+                            message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导出

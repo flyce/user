@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Upload, Icon, message, Table } from "antd/lib/index";
-import {file} from "../../Utils/fetch";
+import { file, post } from "../../Utils/fetch";
 
 const Dragger = Upload.Dragger;
 
@@ -16,6 +16,16 @@ class UploadModal extends React.PureComponent {
             dataTableVisible: !!flag
         })
     }
+
+    postAircraftData = () => {
+        post('user/aircrafts', this.state.data).then(response => {
+            if(response.success) {
+                message.info(response.info);
+            } else {
+                message.warning(response.info);
+            }
+        });
+    };
 
     render() {
         const { visible, handleUploadModalVisible, tableName } = this.props;
@@ -122,6 +132,7 @@ class UploadModal extends React.PureComponent {
                     if(response.success) {
                         handleUploadModalVisible();
                         message.info("由于不同浏览器时间格式不一样的原因，如果上传的数据中时间不正确，请联系管理员处理:mail@flyce.cn", 10);
+                        console.log(response.data);
                         this.setState({
                             data: response.data
                         });
@@ -173,7 +184,7 @@ class UploadModal extends React.PureComponent {
                     footer={[
                         <Button key="back" onClick={() => this.handleDataTableVisible()}>取消</Button>,
                         <Button key="submit" type="primary" onClick={() => {
-                            message.info("提交数据，开发中...");
+                            this.postAircraftData();
                             this.handleDataTableVisible();
                         }}>
                             确认

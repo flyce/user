@@ -27,7 +27,7 @@ class Caac extends React.PureComponent {
             // onFilter: (value, record) => record.name.indexOf(value) === 0,
             sorter: (a, b) => a.name > b.name,
             render: (record) => {
-                return (<a href="https://www.flyce.cn" target="_blank"  rel="noopener noreferrer" >{record.name}</a>);
+                return (<a href={record.filePath} target="_blank"  rel="noopener noreferrer" >{record.name}</a>);
             },
             defaultSortOrder: 'aescend',
             key: 'name'

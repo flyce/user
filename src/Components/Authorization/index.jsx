@@ -437,7 +437,8 @@ class Authorization extends React.Component {
         },{
             title: '剩余天数',
             key: 'userId',
-            dataIndex: 'userId',
+            dataIndex: 'expiredDate',
+            render: (text) => ((text - Math.floor(Date.now() /1000)) /24 /36000 )
         }, {
             title: '持续评估日期1',
             key: 'evaluationDate1',
@@ -514,7 +515,7 @@ class Authorization extends React.Component {
                     <Button
                         onClick={() => {
                             // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                            message.info("开发中...");
+                            message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导出

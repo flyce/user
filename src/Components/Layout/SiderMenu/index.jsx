@@ -118,11 +118,18 @@ class SiderMenu extends PureComponent {
                                 <Link to={"cospass"}/>
                             </Menu.Item>
                         </SubMenu>
-                        <Menu.Item key="caac">
-                            <Icon type="file-pdf" />
-                            <span className="nav-text">局方文件查询</span>
-                            <Link to={"caac"}/>
-                        </Menu.Item>
+                        <SubMenu key="jufang" title={<span><Icon type="rocket" /><span>局方文件</span></span>}>
+                            <Menu.Item key="document">
+                                <Icon type="file-pdf" />
+                                <span className="nav-text">局方文件查询</span>
+                                <Link to={"document"}/>
+                            </Menu.Item>
+                            <Menu.Item key="cadquery">
+                                <Icon type="book" />
+                                <span className="nav-text">适航指令查询</span>
+                                <Link to={"cadquery"}/>
+                            </Menu.Item>
+                        </SubMenu>
                         <Menu.Item key="timeline">
                             <Icon type="exception" />
                             <span className="nav-text">开发日志 V2.1</span>
