@@ -31,8 +31,8 @@ const GlobalFooter = ({ className = 'globalFooter', links, copyright }) => {
                     ))}
                 </div>
             )}
-            <span>支持我们</span>
-            {content}
+            {/*<span>支持我们</span>*/}
+            {/*{content}*/}
             {/*<Popover content={content} title="扫描二维码赞赏" trigger="hover">*/}
                 {/*<Button>支持我们</Button>*/}
             {/*</Popover>*/}

@@ -438,7 +438,7 @@ class Authorization extends React.Component {
             title: '剩余天数',
             key: 'userId',
             dataIndex: 'expiredDate',
-            render: (text) => ((text - Math.floor(Date.now() /1000)) /24 /36000 )
+            render: (text) => Math.floor((text - (Math.floor(Date.now() /1000))) /24 /3600 )
         }, {
             title: '持续评估日期1',
             key: 'evaluationDate1',

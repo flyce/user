@@ -11,8 +11,21 @@ const IconFont = Icon.createFromIconfontCN({
 });
 
 class SiderMenu extends PureComponent {
+    rootSubmenuKeys = ['people', 'ra', 'elt', 'jufang'];
     state = {
         modalVisible: false,
+        openKeys: [],
+    };
+
+    onOpenChange = (openKeys) => {
+        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            this.setState({ openKeys });
+        } else {
+            this.setState({
+                openKeys: latestOpenKey ? [latestOpenKey] : [],
+            });
+        }
     };
 
     render() {
@@ -34,7 +47,13 @@ class SiderMenu extends PureComponent {
                             <h1>IRIS STUDIO</h1>
                         </Link>
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.path]} defaultOpenKeys={[]}>
+                    <Menu
+                        theme="dark"
+                        mode="inline"
+                        defaultSelectedKeys={[this.props.path]}
+                        openKeys={this.state.openKeys}
+                        onOpenChange={this.onOpenChange}
+                    >
                         <Menu.Item key="center">
                             <Icon type="user" />
                             <span className="nav-text">个人中心</span>
@@ -50,23 +69,11 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">航空器信息</span>
                             <Link to={"aircraft"}/>
                         </Menu.Item>
-                        <SubMenu key="ad" title={<span><Icon type="mail" /><span>订阅管理</span></span>}>
-                            <Menu.Item key="info">
-                                <Icon type="desktop" />
-                                <span className="nav-text">订阅方式管理</span>
-                                <Link to={"info"}/>
-                            </Menu.Item>
-                            <Menu.Item key="cadrule">
-                                <Icon type="appstore-o" />
-                                <span className="nav-text">CAAC CAD规则管理</span>
-                                <Link to={"cadrule"}/>
-                            </Menu.Item>
-                            <Menu.Item key="adrule">
-                                <Icon type="appstore-o" />
-                                <span className="nav-text">EASA AD规则管理</span>
-                                <Link to={"adrule"}/>
-                            </Menu.Item>
-                        </SubMenu>
+                        <Menu.Item key="info">
+                            <Icon type="desktop" />
+                            <span className="nav-text">订阅管理</span>
+                            <Link to={"info"}/>
+                        </Menu.Item>
                         <SubMenu key="people" title={<span><Icon type="team" /><span>人员执照管理&nbsp;&nbsp;<sup>new</sup></span></span>}>
                             <Menu.Item key="license">
                                 <Icon type="disconnect" />
@@ -128,6 +135,16 @@ class SiderMenu extends PureComponent {
                                 <Icon type="book" />
                                 <span className="nav-text">适航指令查询</span>
                                 <Link to={"cadquery"}/>
+                            </Menu.Item>
+                            <Menu.Item key="cadrule">
+                                <Icon type="appstore-o" />
+                                <span className="nav-text">CAAC CAD订阅规则</span>
+                                <Link to={"cadrule"}/>
+                            </Menu.Item>
+                            <Menu.Item key="adrule">
+                                <Icon type="appstore-o" />
+                                <span className="nav-text">EASA AD订阅规则</span>
+                                <Link to={"adrule"}/>
                             </Menu.Item>
                         </SubMenu>
                         <Menu.Item key="timeline">

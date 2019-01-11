@@ -21,6 +21,7 @@ class SubscribeManage extends React.PureComponent {
                         receivednote: response.receivednote,
                         receivedmessage: response.receivedmessage,
                         subscribe: response.subscribe,
+                        phone: response.phone,
                         subscribeExpireTime: response.subscribeExpireTime
                     });
                 } else {
@@ -78,6 +79,7 @@ class SubscribeManage extends React.PureComponent {
             }
         });
     }
+
     handleChangeMessage() {
         const { receivedmessage } = this.state;
         this.setState({
@@ -95,7 +97,7 @@ class SubscribeManage extends React.PureComponent {
     }
 
     render () {
-        const { mail, receivedcad, receivedad, receivednote, receivedmessage } = this.state;
+        const { mail, receivedcad, receivedad, receivednote, receivedmessage, phone } = this.state;
         return (
             <Card bordered={false}>
                 <LoginVerify/>
@@ -115,7 +117,13 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>CAD订阅:</span>
+                                <span>手机号:</span>
+                                <span>{phone}</span>
+                            </p>
+                        </Row>
+                        <Row>
+                            <p>
+                                <span>CAD订阅:<sub><a href="#">CAAC网址</a></sub></span>
                                 <span>
                                     <Switch
                                         checked={receivedcad}
@@ -128,7 +136,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>EASA AD订阅:</span>
+                                <span>EASA AD订阅:<sub><a href="#">EASA网址</a></sub></span>
                                 <span>
                                     <Switch
                                         checked={receivedad}
@@ -141,7 +149,33 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>CAAC 信息订阅:</span>
+                                <span>CAAC 信息订阅:<sub><a href="#">caac网址</a></sub></span>
+                                <span>
+                                    <Switch
+                                        checked={receivednote}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeNote.bind(this)}
+                                    />
+                                </span>
+                            </p>
+                        </Row>
+                        <Row>
+                            <p>
+                                <span>授权管理订阅:<sub>包括人员执照管理和人员授权管理</sub></span>
+                                <span>
+                                    <Switch
+                                        checked={receivednote}
+                                        checkedChildren="开"
+                                        unCheckedChildren="关"
+                                        onClick={this.handleChangeNote.bind(this)}
+                                    />
+                                </span>
+                            </p>
+                        </Row>
+                        <Row>
+                            <p>
+                                <span>航空器信息管理订阅:<sub>包括电台执照，ELT到期</sub></span>
                                 <span>
                                     <Switch
                                         checked={receivednote}
