@@ -1,14 +1,17 @@
 import React from 'react';
-import { Table, Input, message } from 'antd';
+import { Table, Input, message, Select } from 'antd';
 import { get } from '../../Utils/fetch';
 
 const Search = Input.Search;
+const InputGroup = Input.Group;
+const Option = Select.Option;
 
 class CadQuery extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = ({
-            data: []
+            data: [],
+            key: 'cadAmendmentNo'
         })
     }
     componentDidMount() {
@@ -18,6 +21,13 @@ class CadQuery extends React.PureComponent {
             });
         });
     }
+
+    handleSelectChange = (value) => {
+        this.setState({
+            key: value
+        });
+    };
+
     render() {
         const { data } = this.state;
         const columns = [{
@@ -57,22 +67,31 @@ class CadQuery extends React.PureComponent {
         }];
         return (
             <div>
-                <Search
-                    placeholder="输入关键词来查询"
-                    onSearch={value => {
-                        if(value.length === 0) {
-                            message.error("请输入内容后再搜索");
-                        } else {
-                            get('doc/search?keyword=' + value).then(res => {
-                                this.setState({
-                                    data: res.docs
-                                });
-                            })
-                        }
-                    }}
-                    enterButton="搜索"
-                    size="large"
-                />
+                <InputGroup compact>
+                    <Select defaultValue="cadAmendmentNo" size="large" style={{ width: "10%" }} onChange={this.handleSelectChange}>
+                        <Option value="cadAmendmentNo">修正案号</Option>
+                        <Option value="title">标题</Option>
+                        <Option value="cadNo">指令编号</Option>
+                        <Option value="issuedBy">颁发单位</Option>
+                    </Select>
+                    <Search
+                        placeholder="输入关键词来查询"
+                        onSearch={value => {
+                            if(value.length === 0) {
+                                message.error("请输入内容后再搜索");
+                            } else {
+                                get(`user/cad/search?${this.state.key}=${value}`).then(res => {
+                                    this.setState({
+                                        data: res.docs
+                                    });
+                                })
+                            }
+                        }}
+                        enterButton="搜索"
+                        size="large"
+                        style={{ width: "90%" }}
+                    />
+                </InputGroup>
                 <Table
                     columns={columns}
                     dataSource={data}

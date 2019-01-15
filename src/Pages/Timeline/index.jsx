@@ -39,6 +39,8 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员执照管理功能 导入导出还有问题需要解决 2018-11-4</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员授权管理功能 2018-11-18</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加适航指令查询功能 2018-11-20</Timeline.Item>
+                <Timeline.Item color="red" dot={<Icon type="frown" style={{ fontSize: '16px' }} />}>前段时间电脑发生了故障，由于没push 我们丢失了一个月的进度 2018-1-10</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复CAD/局方文件仅可以查询部分字段的bug<br/>添加了不炫酷的动画（ps:我不会写炫酷的，所以是不炫酷的） 2018-1-11</Timeline.Item>
             </Timeline>
         </Card>
     </div>

@@ -8,6 +8,7 @@
     "history": "^4.7.2",
     "less": "2.7.2",
     "rc-drawer": "^1.7.6",
+    "rc-texty": "^0.2.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-router": "^4.3.1",

@@ -41,6 +41,20 @@ class RadioList extends React.Component {
         });
     }
 
+    onChange = (page) => {
+        get('user/radio?skip=' + (page - 1)).then((res) => {
+            if(res.success) {
+                this.setState({
+                    data: res.radio,
+                    defaultCurrent: page,
+                    isLoading: false
+                });
+            } else {
+                message.error(res.info);
+            }
+        });
+    };
+
 
     render() {
         const { isLoading } = this.state;

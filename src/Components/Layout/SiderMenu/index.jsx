@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import Texty from 'rc-texty';
 import './style.css';
 
 const { Sider } = Layout;
@@ -64,32 +65,15 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">免责申明</span>
                             <Link to={"disclaimer"}/>
                         </Menu.Item>
-                        <Menu.Item key="aircraft">
-                            <IconFont type="icon-aircraft1" />
-                            <span className="nav-text">航空器信息</span>
-                            <Link to={"aircraft"}/>
-                        </Menu.Item>
                         <Menu.Item key="info">
                             <Icon type="desktop" />
                             <span className="nav-text">订阅管理</span>
                             <Link to={"info"}/>
                         </Menu.Item>
-                        <SubMenu key="people" title={<span><Icon type="team" /><span>人员执照管理&nbsp;&nbsp;<sup>new</sup></span></span>}>
-                            <Menu.Item key="license">
-                                <Icon type="disconnect" />
-                                <span className="nav-text">到期预警</span>
-                                <Link to={"license"}/>
-                            </Menu.Item>
-                            <Menu.Item key="licenselist">
-                                <Icon type="profile" />
-                                <span className="nav-text">人员执照详情</span>
-                                <Link to={"licenselist"}/>
-                            </Menu.Item>
-                        </SubMenu>
-                        <Menu.Item key="authorization">
-                            <Icon type="profile" />
-                            <span className="nav-text">人员授权管理&nbsp;&nbsp;<sup>new</sup></span>
-                            <Link to={"authorization"}/>
+                        <Menu.Item key="aircraft">
+                            <IconFont type="icon-aircraft1" />
+                            <span className="nav-text">航空器信息</span>
+                            <Link to={"aircraft"}/>
                         </Menu.Item>
                         <SubMenu key="ra" title={<span><Icon type="wifi" /><span>电台执照管理</span></span>}>
                             <Menu.Item key="radio">
@@ -125,6 +109,23 @@ class SiderMenu extends PureComponent {
                                 <Link to={"cospass"}/>
                             </Menu.Item>
                         </SubMenu>
+                        <SubMenu key="people" title={<span><Icon type="team" /><span>人员执照管理&nbsp;&nbsp;<sup className="blink">new</sup></span></span>}>
+                            <Menu.Item key="license">
+                                <Icon type="disconnect" />
+                                <span className="nav-text">到期预警</span>
+                                <Link to={"license"}/>
+                            </Menu.Item>
+                            <Menu.Item key="licenselist">
+                                <Icon type="profile" />
+                                <span className="nav-text">人员执照详情</span>
+                                <Link to={"licenselist"}/>
+                            </Menu.Item>
+                        </SubMenu>
+                        <Menu.Item key="authorization">
+                            <Icon type="profile" />
+                            <span className="nav-text">人员授权管理&nbsp;&nbsp;<sup className="blink">new</sup></span>
+                            <Link to={"authorization"}/>
+                        </Menu.Item>
                         <SubMenu key="jufang" title={<span><Icon type="rocket" /><span>局方文件</span></span>}>
                             <Menu.Item key="document">
                                 <Icon type="file-pdf" />

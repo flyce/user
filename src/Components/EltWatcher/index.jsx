@@ -23,21 +23,22 @@ class Radio extends React.PureComponent {
     componentDidMount() {
         this.onTabsChange(1);
         this.init();
-        get('user/count?db=radio').then(res => {
-            if(res.success) {
-                this.setState({
-                    count: res.count
-                });
-            } else {
-                message.error(res.info);
-            }
-        });
+        // get('user/count?db=radio').then(res => {
+        //     if(res.success) {
+        //         this.setState({
+        //             count: res.count
+        //         });
+        //     } else {
+        //         message.error(res.info);
+        //     }
+        // });
     }
 
     init = () => {
         get('user/eltwatcher').then(res => {
             if(res.success) {
                 this.setState({
+                    count: res.count15,
                     count15: res.count15,
                     count30: res.count30,
                     count60: res.count60

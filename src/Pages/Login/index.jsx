@@ -124,7 +124,7 @@ class NLoginForm extends Component {
                         {getFieldDecorator('password', {
                             rules: [{ required: true, message: 'Please input your Password!' }],
                         })(
-                            <Input name="password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" onChange={this.handleTextChange.bind(this)} />
+                            <Input name="password" password prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" onChange={this.handleTextChange.bind(this)} />
                         )}
                     </FormItem>
                     <Row>
