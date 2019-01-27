@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Pop
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import { downloadFile, get, post } from '../../Utils/fetch';
+import { get, post } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -20,6 +20,7 @@ const CreateForm = Form.create()((props) => {
             if (err) return;
             form.resetFields();
             if(create) {
+                console.log(fieldsValue);
                 post('user/license', fieldsValue).then(response => {
                     if(response.success) {
                         message.info(response.info);
@@ -163,11 +164,11 @@ const CreateForm = Form.create()((props) => {
                     {form.getFieldDecorator('B737NG', {
                         rules: [{
                             required: true,
-                            type: 'string', message: '请输入B737NG',
+                            type: 'string', message: '请输入B737NG签署',
                         }],
                         initialValue: value.B737NG
                     })(
-                        <Input placeholder="请输入选呼号码"/>
+                        <Input placeholder="请输入B737NG签署"/>
                     )}
                 </FormItem>
                 <FormItem
@@ -178,11 +179,11 @@ const CreateForm = Form.create()((props) => {
                 >
                     {form.getFieldDecorator('B737MAX', {
                         rules: [{
-                            type: 'string', message: '请输入B737MAX',
+                            type: 'string', message: '请输入B737MAX签署',
                         }],
                         initialValue: value.B737MAX
                     })(
-                        <Input placeholder="请输入B737MAX"/>
+                        <Input placeholder="请输入B737MAX签署"/>
                     )}
                 </FormItem>
                 <FormItem
@@ -235,7 +236,7 @@ class LicenseList extends React.Component {
 
     componentDidMount() {
         this.init();
-        get('user/count?db=aircraft').then(res => {
+        get('user/count?db=license').then(res => {
             if(res.success) {
                 this.setState({
                     count: res.count
@@ -247,7 +248,7 @@ class LicenseList extends React.Component {
     }
 
     onChange = (page) => {
-        get('user/aircraft?skip=' + (page - 1)).then((res) => {
+        get('user/license?skip=' + (page - 1)).then((res) => {
             if(res.success) {
                 this.setState({
                     data: res.aircraft,
@@ -444,6 +445,6 @@ class LicenseList extends React.Component {
             </Card>
         );
     }
-};
+}
 
 export default LicenseList;

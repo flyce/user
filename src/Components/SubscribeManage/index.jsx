@@ -123,7 +123,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>CAD订阅:<sub><a href="#">CAAC网址</a></sub></span>
+                                <span>CAD订阅:<sub><a href="http://www.caacaad.org.cn/" target="_blank" rel="noopener noreferrer">CAAC网址</a></sub></span>
                                 <span>
                                     <Switch
                                         checked={receivedcad}
@@ -136,7 +136,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>EASA AD订阅:<sub><a href="#">EASA网址</a></sub></span>
+                                <span>EASA AD订阅:<sub><a href="https://ad.easa.europa.eu/mcai-docs/page-1" target="_blank" rel="noopener noreferrer">EASA网址</a></sub></span>
                                 <span>
                                     <Switch
                                         checked={receivedad}
@@ -149,7 +149,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>CAAC 信息订阅:<sub><a href="#">caac网址</a></sub></span>
+                                <span>CAAC 信息订阅:<sub><a href="http://www.caac.gov.cn/XXGK/XXGK/index_172.html?fl=13" target="_blank" rel="noopener noreferrer">caac网址</a></sub></span>
                                 <span>
                                     <Switch
                                         checked={receivednote}

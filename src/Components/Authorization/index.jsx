@@ -4,7 +4,9 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Pop
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import { downloadFile, get, post } from '../../Utils/fetch';
+import { get, post } from '../../Utils/fetch';
+
+const Search = Input.Search;
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -507,7 +509,7 @@ class Authorization extends React.Component {
                     }}>新建</Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            message.info("开发中...");
+                            message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导入
@@ -529,7 +531,27 @@ class Authorization extends React.Component {
                         disabled={!hasSelected}
                     >
                         删除
-                    </Button>
+                    </Button>&nbsp;&nbsp;
+                    <Search
+                        placeholder="请输入搜索内容"
+                        onSearch={value => {
+                           if(value !== '') {
+                               get(`user/authorization?keyword=${value}`).then(response => {
+                                   if(response.success) {
+                                       this.setState({
+                                           data: response.data,
+                                       });
+                                   } else {
+                                       message.error(response.info);
+                                   }
+                               });
+                           } else {
+                               message.error('您未输入内容，请输入内容后查询！')
+                           }
+                        }}
+                        enterButton
+                        style={{width: "30%"}}
+                    />
                 </div>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
                 <Table

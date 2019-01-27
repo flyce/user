@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import Texty from 'rc-texty';
 import './style.css';
 
 const { Sider } = Layout;
