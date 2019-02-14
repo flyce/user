@@ -535,19 +535,19 @@ class Authorization extends React.Component {
                     <Search
                         placeholder="请输入搜索内容"
                         onSearch={value => {
-                           if(value !== '') {
-                               get(`user/authorization?keyword=${value}`).then(response => {
-                                   if(response.success) {
-                                       this.setState({
-                                           data: response.data,
-                                       });
-                                   } else {
-                                       message.error(response.info);
-                                   }
-                               });
-                           } else {
-                               message.error('您未输入内容，请输入内容后查询！')
-                           }
+                            if(value !== '') {
+                                get(`user/authorization?keyword=${value}`).then(response => {
+                                    if(response.success) {
+                                        this.setState({
+                                            data: response.data,
+                                        });
+                                    } else {
+                                        message.error(response.info);
+                                    }
+                                });
+                            } else {
+                                message.error('您未输入内容，请输入内容后查询！')
+                            }
                         }}
                         enterButton
                         style={{width: "30%"}}

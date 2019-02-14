@@ -1,32 +1,25 @@
 import React from 'react';
-import { Table, Input, message, Select } from 'antd';
-import { get } from '../../Utils/fetch';
+import { Table, Input, message, Button } from 'antd';
+import { get, downloadFile } from '../../Utils/fetch';
 
 const Search = Input.Search;
 const InputGroup = Input.Group;
-const Option = Select.Option;
 
 class CadQuery extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = ({
-            data: [],
-            key: 'cadAmendmentNo'
+            data: []
         })
     }
     componentDidMount() {
         get('user/cad').then(res => {
             this.setState({
-                data: res.docs
+                data: res.docs,
+                keyword: ''
             });
         });
     }
-
-    handleSelectChange = (value) => {
-        this.setState({
-            key: value
-        });
-    };
 
     render() {
         const { data } = this.state;
@@ -67,31 +60,38 @@ class CadQuery extends React.PureComponent {
         }];
         return (
             <div>
-                <InputGroup compact>
-                    <Select defaultValue="cadAmendmentNo" size="large" style={{ width: "10%" }} onChange={this.handleSelectChange}>
-                        <Option value="cadAmendmentNo">修正案号</Option>
-                        <Option value="title">标题</Option>
-                        <Option value="cadNo">指令编号</Option>
-                        <Option value="issuedBy">颁发单位</Option>
-                    </Select>
-                    <Search
-                        placeholder="输入关键词来查询"
-                        onSearch={value => {
-                            if(value.length === 0) {
-                                message.error("请输入内容后再搜索");
-                            } else {
-                                get(`user/cad/search?${this.state.key}=${value}`).then(res => {
-                                    this.setState({
-                                        data: res.docs
-                                    });
-                                })
-                            }
-                        }}
-                        enterButton="搜索"
-                        size="large"
-                        style={{ width: "90%" }}
-                    />
-                </InputGroup>
+                <div style={{display: "flex", flexDirection: "row", width: "100%"}}>
+                    <InputGroup compact>
+                        <Search
+                            placeholder="输入关键词来查询"
+                            onSearch={value => {
+                                if(value.length === 0) {
+                                    message.error("请输入内容后再搜索");
+                                } else {
+                                    get(`user/cad/search?keyword=${value}`).then(res => {
+                                        this.setState({
+                                            data: res.docs,
+                                            keyword: value
+                                        });
+                                    })
+                                }
+                            }}
+                            enterButton="搜索"
+                            size="large"
+                            style={{ width: "99%" }}
+                        />
+                    </InputGroup>
+
+                    <Button size="large" onClick={() => {
+                        const { keyword } = this.state;
+                        if(keyword.length === 0) {
+                            message.error("无搜索记录，不可导出！");
+                        } else {
+                            downloadFile(`user/cad/export?keyword=${keyword}`, keyword);
+                        }
+                    }}>导出</Button>
+                </div>
+
                 <Table
                     columns={columns}
                     dataSource={data}

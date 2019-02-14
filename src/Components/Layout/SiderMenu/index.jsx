@@ -147,6 +147,11 @@ class SiderMenu extends PureComponent {
                                 <Link to={"adrule"}/>
                             </Menu.Item>
                         </SubMenu>
+                        <Menu.Item key="external">
+                            <Icon type="hdd" />
+                            <span className="nav-text">外来文件管理</span>
+                            <Link to={"external"}/>
+                        </Menu.Item>
                         <Menu.Item key="timeline">
                             <Icon type="exception" />
                             <span className="nav-text">开发日志 V2.1</span>

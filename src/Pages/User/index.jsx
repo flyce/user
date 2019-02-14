@@ -19,6 +19,7 @@ import LicenseList from '../../Components/LicenseList';
 import License from '../../Components/License';
 import Authorization from '../../Components/Authorization';
 import CadQuery from '../../Components/CadQuery';
+import External from '../../Components/External';
 
 const User = (location) => {
 
@@ -41,7 +42,8 @@ const User = (location) => {
         "licenselist": <LicenseList />,
         "license": <License />,
         "authorization": <Authorization />,
-        "cadquery": <CadQuery />
+        "cadquery": <CadQuery />,
+        "external": <External />
     };
 
     let content = data[location.match.params.path] ?

@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm } from 'antd';
+import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm, Select } from 'antd';
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
 import { get, post } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 const formItemLayout = {
     span: '8'
 };
@@ -84,17 +85,17 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="中心"
+                    label="中心/科室"
                     className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('center', {
                         rules: [{
-                            required: true, message: '请输入中心',
+                            required: true, message: '请输入中心/科室',
                         }],
                         initialValue: value.center
                     })(
-                        <Input placeholder="请输入中心"/>
+                        <Input placeholder="请输入中心/科室"/>
                     )}
                 </FormItem>
                 <FormItem
@@ -124,7 +125,15 @@ const CreateForm = Form.create()((props) => {
                         }],
                         initialValue: value.licenseType
                     })(
-                        <Input placeholder="请输入执照类型"/>
+                        <Select
+                            showSearch
+                            placeholder="请输入执照签署"
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            <Option value="AV">AV</Option>
+                            <Option value="ME-TA">ME-TA</Option>
+                            <Option value="ME-PA">ME-PA</Option>
+                        </Select>
                     )}
                 </FormItem>
                 <FormItem
@@ -157,33 +166,18 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="B737NG签署"
+                    label="执照签署"
                     className="item"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('B737NG', {
+                    {form.getFieldDecorator('sign', {
                         rules: [{
                             required: true,
-                            type: 'string', message: '请输入B737NG签署',
+                            type: 'string', message: '请输入执照签署',
                         }],
-                        initialValue: value.B737NG
+                        initialValue: value.sign
                     })(
-                        <Input placeholder="请输入B737NG签署"/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="B737MAX签署"
-                    className="item offset"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('B737MAX', {
-                        rules: [{
-                            type: 'string', message: '请输入B737MAX签署',
-                        }],
-                        initialValue: value.B737MAX
-                    })(
-                        <Input placeholder="请输入B737MAX签署"/>
+                        <Input placeholder="请输入执照签署"/>
                     )}
                 </FormItem>
                 <FormItem
@@ -217,7 +211,7 @@ class LicenseList extends React.Component {
         selectedRowKeys: [],
         value: {
             name: '', center: '', licenseType: '', lastIssuedDate: '', expirationDate: '',
-            B737NG: '', B737MAX: '', note: ''
+            sign: '', note: ''
         }
     };
 
@@ -268,6 +262,7 @@ class LicenseList extends React.Component {
     };
 
     handleManage = (value) => {
+        console.log(value);
         this.setState({
             value
         });
@@ -293,6 +288,7 @@ class LicenseList extends React.Component {
             console.log(response);
             if(response.success) {
                 message.info(response.info);
+                this.init();
             } else {
                 message.error(response.info);
             }
@@ -347,17 +343,13 @@ class LicenseList extends React.Component {
             key: 'expirationDate',
             render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
         }, {
-            title: 'B737NG签署',
-            dataIndex: 'B737NG',
-            key: 'B737NG',
+            title: '签署',
+            dataIndex: 'sign',
+            key: 'sign',
         }, {
-            title: 'B737MAX签署',
-            dataIndex: 'B737MAX',
-            key: 'B737MAX',
-        },{
             title: '备注',
             dataIndex: 'note',
-            key: 'noge新·',
+            key: 'note',
         }, {
             title: "操作",
             render: (text, record) => (<Button onClick={
