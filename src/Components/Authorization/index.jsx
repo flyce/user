@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm } from 'antd';
+import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm, Select } from 'antd';
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
 import { get, post } from '../../Utils/fetch';
 
 const Search = Input.Search;
+
+const Option = Select.Option;
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -92,28 +94,44 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="执照专业"
+                    label="执照类型"
                     className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('major', {
                         rules: [{
-                            required: true, message: '请输入执照专业',
+                            required: true, message: '请选择执照类型',
                         }],
                         initialValue: value.major
                     })(
-                        <Input placeholder="请输入执照专业"/>
+                        <Select
+                            showSearch
+                            placeholder="请选择执照类型"
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            <Option value="AV">AV</Option>
+                            <Option value="ME-TA">ME-TA</Option>
+                            <Option value="ME-PA">ME-PA</Option>
+                            <Option value="ME-TH">ME-TH</Option>
+                            <Option value="ME-PH">ME-PH</Option>
+                            <Option value="STR">STR</Option>
+                            <Option value="PWT">PWT</Option>
+                            <Option value="LGR">LGR</Option>
+                            <Option value="MEC">MEC</Option>
+                            <Option value="AVC">AVC</Option>
+                            <Option value="ELC">ELC</Option>
+                        </Select>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="中心"
+                    label="中心/科室"
                     className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('center', {
                         rules: [{
-                            required: true, message: '请输入中心',
+                            required: true, message: '请输入中心/科室',
                         }],
                         initialValue: value.center
                     })(
@@ -270,7 +288,7 @@ const CreateForm = Form.create()((props) => {
                         }],
                         initialValue: value.participationWorkDate
                     })(
-                        <Input placeholder="参加维修工作时间"/>
+                        <Input placeholder="参加维修工作时间" type="number"/>
                     )}
                 </FormItem>
             </Form>

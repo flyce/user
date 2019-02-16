@@ -17,21 +17,17 @@ const CreateForm = Form.create()((props) => {
     const { modalVisible, form, handleModalVisible, value, handleUpdate, handleDelete, create, handleInit } = props;
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
-            fieldsValue.evaluationDate = Math.floor(new Date(fieldsValue.evaluationDate._d).getTime() / 1000);
-            fieldsValue.authDate = Math.floor(new Date(fieldsValue.authDate._d).getTime() / 1000);
-            fieldsValue.expiredDate = Math.floor(new Date(fieldsValue.expiredDate._d).getTime() / 1000);
-            fieldsValue.evaluationDate1 = fieldsValue.evaluationDate1 ? Math.floor(new Date(fieldsValue.evaluationDate1._d).getTime() / 1000) : null;
-            fieldsValue.authDate1 = fieldsValue.authDate1 ? Math.floor(new Date(fieldsValue.authDate1._d).getTime() / 1000) : null;
-            fieldsValue.evaluationDate2 = fieldsValue.evaluationDate2 ? Math.floor(new Date(fieldsValue.evaluationDate2._d).getTime() / 1000) : null;
-            fieldsValue.authDate2 = fieldsValue.authDate2 ? Math.floor(new Date(fieldsValue.authDate2._d).getTime() / 1000) : null;
-            fieldsValue.evaluationDate3 = fieldsValue.evaluationDate3 ? Math.floor(new Date(fieldsValue.evaluationDate3._d).getTime() / 1000): null;
-            fieldsValue.authDate3 = fieldsValue.evaluationDate3 ? Math.floor(new Date(fieldsValue.evaluationDate3._d).getTime() / 1000) : null;
+            console.log(Math.floor(new Date(fieldsValue.releaseDate._d).getTime() / 1000), fieldsValue.receivedDate._d);
+            fieldsValue.releaseDate = Math.floor(new Date(fieldsValue.releaseDate._d).getTime() / 1000);
+            fieldsValue.receivedDate = Math.floor(new Date(fieldsValue.receivedDate._d).getTime() / 1000);
+            fieldsValue.finishDate = fieldsValue.finishDate ? Math.floor(new Date(fieldsValue.finishDate._d).getTime() / 1000) : null;
+            fieldsValue.timeLimit = fieldsValue.timeLimit ? Math.floor(new Date(fieldsValue.timeLimit._d).getTime() / 1000) : null;
             if (err) return;
             form.resetFields();
             if(create) {
-                post('user/authorization', fieldsValue).then(response => {
+                post('external', fieldsValue).then(response => {
                     if(response.success) {
-                        message.info(response.info);
+                        message.info("创建成功");
                         handleInit();
                     } else {
                         message.warning(response.info);
@@ -44,7 +40,7 @@ const CreateForm = Form.create()((props) => {
         });
     };
 
-    const title = create ? "新增人员信息" : "人员信息修改";
+    const title = create ? "新增外来文件信息" : "外来文件信息修改";
     const footer = create ? [
         <Button key="cancel" onClick={() => handleModalVisible()}>取消</Button>,
         <Button key="ok" type="primary" onClick={okHandle}>
@@ -77,200 +73,163 @@ const CreateForm = Form.create()((props) => {
             >
                 <FormItem
                     {...formItemLayout}
-                    label="姓名"
+                    label="编号"
                     className="item"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('name', {
+                    {form.getFieldDecorator('filename', {
                         rules: [{
-                            required: true, message: '请输入姓名',
+                            required: true, message: '请输入编号',
                         }],
-                        initialValue: value.name
+                        initialValue: value.filename
                     })(
-                        <Input placeholder="请输入姓名"/>
+                        <Input placeholder="请输入编号"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="执照专业"
+                    label="标题"
                     className="item offset"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('major', {
+                    {form.getFieldDecorator('title', {
                         rules: [{
-                            required: true, message: '请输入执照专业',
+                            required: true, message: '请输入标题',
                         }],
-                        initialValue: value.major
+                        initialValue: value.unit
                     })(
-                        <Input placeholder="请输入执照专业"/>
+                        <Input placeholder="请输入标题"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="中心"
+                    label="发文单位"
                     className="item offset"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('center', {
+                    {form.getFieldDecorator('unit', {
                         rules: [{
-                            required: true, message: '请输入中心',
+                            required: true, message: '请输入发文单位',
                         }],
-                        initialValue: value.center
+                        initialValue: value.unit
                     })(
-                        <Input placeholder="请输入中心"/>
+                        <Input placeholder="请输入发文单位"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="岗位"
+                    label="相关要求"
                     className="item"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('position', {
+                    {form.getFieldDecorator('requirement', {
                         rules: [{
-                            required: true, type: 'string', message: '请输入岗位',
+                            type: 'string', message: '请输入相关要求',
                         }],
-                        initialValue: value.position
+                        initialValue: value.requirement
                     })(
-                        <Input placeholder="请输入岗位"/>
+                        <Input placeholder="请输入相关要求"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="授权项目"
+                    label="完成时限"
                     className="item offset"
                     hasFeedback
                 >
-                    {form.getFieldDecorator('project', {
+                    {form.getFieldDecorator('timeLimit', {
                         rules: [{
-                            required: true, type: 'string', message: '请输入岗位',
+                            type: 'object',
+                            message: '请输入完成时限',
                         }],
-                        initialValue: value.project
+                        initialValue: value.timeLimit === null ? null : moment.unix(value.timeLimit)
                     })(
-                        <Input placeholder="请输入岗位"/>
+                        <DatePicker placeholder="请选择发布日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="评估日期"
+                    label="发布日期"
                     className="item offset"
                 >
-                    {form.getFieldDecorator('evaluationDate', {
+                    {form.getFieldDecorator('releaseDate', {
                         rules: [{
-                            required: true, message: '请选择最新一次颁发/续签日期',
+                            required: true, message: '请选择发布日期',
                         }],
-                        initialValue: moment.unix(value.evaluationDate)
+                        initialValue: moment.unix(value.releaseDate)
                     })(
-                        <DatePicker placeholder="请选择最新一次颁发/续签日期" style={{ width: '100%' }} />
+                        <DatePicker placeholder="请选择发布日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="授权日期"
+                    label="接收日期"
                     className="item"
                 >
-                    {form.getFieldDecorator('authDate', {
+                    {form.getFieldDecorator('receivedDate', {
                         rules: [{
-                            required: true, message: '请选择执照到期日期',
+                            required: true, message: '请选择接收日期',
                         }],
-                        initialValue: moment.unix(value.authDate)
+                        initialValue: moment.unix(value.receivedDate)
                     })(
-                        <DatePicker placeholder="请选择执照到期日期" style={{ width: '100%' }} />
+                        <DatePicker placeholder="请选择接收日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="到期日期"
+                    label="处理单位"
                     className="item offset"
                 >
-                    {form.getFieldDecorator('expiredDate', {
+                    {form.getFieldDecorator('processingUnit', {
                         rules: [{
-                            required: true, message: '请选择执照到期日期',
+                            required: true, type: 'string', message: '请输入处理单位',
                         }],
-                        initialValue: moment.unix(value.expiredDate)
+                        initialValue: value.processingUnit
                     })(
-                        <DatePicker placeholder="请选择执照到期日期" style={{ width: '100%' }} />
+                        <Input placeholder="请输入处理单位"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="持续评估日期1"
+                    label="处理措施"
                     className="item offset"
                 >
-                    {form.getFieldDecorator('evaluationDate1', {
-                        initialValue: create ? null : value.evaluationDate1 ?  moment.unix(value.evaluationDate1) : null
+                    {form.getFieldDecorator('treatment', {
+                        rules: [{
+                            required: false, type: 'string', message: '请输入处理措施',
+                        }],
+                        initialValue: value.treatment
                     })(
-                        <DatePicker placeholder="请选择持续评估日期1" style={{ width: '100%' }} />
+                        <Input placeholder="请输入处理措施"/>
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="持续授权日期1"
+                    label="完成日期"
                     className="item"
                 >
-                    {form.getFieldDecorator('authDate1', {
-                        initialValue: create ? null : value.authDate1 ? moment.unix(value.authDate1) : null
-                    })(
-                        <DatePicker placeholder="请选择持续授权日期1" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="持续评估日期2"
-                    className="item offset"
-                >
-                    {form.getFieldDecorator('evaluationDate2', {
-                        initialValue: create ? null : value.evaluationDate2 ? moment.unix(value.evaluationDate2): null
-                    })(
-                        <DatePicker placeholder="请选择持续评估日期2" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="持续授权日期2"
-                    className="item offset"
-                >
-                    {form.getFieldDecorator('authDate2', {
-                        initialValue: create ? null : value.authDate2 ? moment.unix(value.authDate2) : null
-                    })(
-                        <DatePicker placeholder="请选择持续授权日期1" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="持续评估日期3"
-                    className="item"
-                >
-                    {form.getFieldDecorator('evaluationDate3', {
-                        initialValue: create ? null : value.evaluationDate3 ? moment.unix(value.evaluationDate3) : null
-                    })(
-                        <DatePicker placeholder="请选择持续评估日期3" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="持续授权日期3"
-                    className="item offset"
-                >
-                    {form.getFieldDecorator('authDate3', {
-                        initialValue: create ? null : value.authDate3 ? moment.unix(value.authDate3) : null
-                    })(
-                        <DatePicker placeholder="请选择持续授权日期3" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="参加维修工作时间"
-                    className="item offset"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('participationWorkDate', {
+                    {form.getFieldDecorator('finishDate', {
                         rules: [{
-                            required: true, type: 'string', message: '参加维修工作时间',
+                            type: 'object',
+                            message: '请选择完成日期',
                         }],
-                        initialValue: value.participationWorkDate
+                        initialValue: value.finishDate === null ? null : moment.unix(value.finishDate)
                     })(
-                        <Input placeholder="参加维修工作时间"/>
+                        <DatePicker placeholder="请选择完成日期" style={{ width: '100%' }} />
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="上传FTP"
+                    className="item offset"
+                >
+                    {form.getFieldDecorator('upload', {
+                        rules: [{
+                            required: false, type: 'string', message: '上传FTP',
+                        }],
+                        initialValue: value.upload
+                    })(
+                        <Input placeholder="请输入处理措施"/>
                     )}
                 </FormItem>
             </Form>
@@ -288,16 +247,14 @@ class Authorization extends React.Component {
         create: false,
         selectedRowKeys: [],
         value: {
-            name: '', center: '', major: '', position: '', project: '',
-            evaluationDate: '', authDate: '', expiredDate: '',
-            evaluationDate1: '', authDate1: '', evaluationDate2: '',
-            authDate2: '', evaluationDate3: '', authDate3: '',
-            participationWorkDate: ''
+            filename: '', title: '', unit: '', requirement: '', timeLimit: '',
+            releaseDate: '', receivedDate: '', processingUnit: '',
+            treatment: '', finishDate: '', upload: ''
         }
     };
 
     init = () =>  {
-        get('user/authorization').then((res) => {
+        get('external').then((res) => {
             if(res.success) {
                 this.setState({
                     data: res.data,
@@ -311,7 +268,7 @@ class Authorization extends React.Component {
 
     componentDidMount() {
         this.init();
-        get('user/count?db=authorization').then(res => {
+        get('user/count?db=external').then(res => {
             if(res.success) {
                 this.setState({
                     count: res.count
@@ -323,10 +280,10 @@ class Authorization extends React.Component {
     }
 
     onChange = (page) => {
-        get('user/authorization?skip=' + (page - 1)).then((res) => {
+        get('external?skip=' + (page - 1)).then((res) => {
             if(res.success) {
                 this.setState({
-                    data: res.aircraft,
+                    data: res.data,
                     defaultCurrent: page,
                     isLoading: false
                 });
@@ -350,30 +307,9 @@ class Authorization extends React.Component {
 
     handleUpdate = (value) => {
         let data = this.state.data;
-        data.map((doc, key) => {
-            if (doc._id === value._id) {
-                doc.name = value.name;
-                doc.center = value.center;
-                doc.major = value.major;
-                doc.position = value.position;
-                doc.project = value.project;
-                doc.evaluationDate = value.evaluationDate;
-                doc.authDate = value.authDate;
-                doc.expiredDate = value.expiredDate;
-                doc.evaluationDate1 = value.evaluationDate1;
-                doc.authDate1 = value.authDate1;
-                doc.evaluationDate2 = value.evaluationDate2;
-                doc.authDate2 = value.authDate2;
-                doc.evaluationDate3 = value.evaluationDate3;
-                doc.authDate3 = value.authDate3;
-                doc.participationWorkDate = value.participationWorkDate;
-            }
-            return 0;
-        });
-        post('user/authorization/update', value).then((response) => {
-            console.log(response);
+        post('external/update', value).then((response) => {
             if(response.success) {
-                message.info(response.info);
+                message.info("修改成功");
             } else {
                 message.error(response.info);
             }
@@ -384,9 +320,9 @@ class Authorization extends React.Component {
     };
 
     handleDelete = (_id) => {
-        post('user/authorization/delete', {_id}).then((response) => {
+        post('external/delete', {_id}).then((response) => {
             if(response.success) {
-                message.info(response.info);
+                message.info("删除成功");
                 this.handleModalVisible();
                 this.setState({selectedRowKeys: 0});
                 this.init();
@@ -402,69 +338,31 @@ class Authorization extends React.Component {
 
     render() {
         const columns = [{
-            title: '姓名',
-            key: 'name',
-            dataIndex: 'name'
+            title: '文件编号',
+            key: 'filename',
+            dataIndex: 'filename'
         }, {
-            title: '中心/科室',
-            key: 'center',
-            dataIndex: 'center'
+            title: '文件标题',
+            key: 'title',
+            dataIndex: 'title'
         }, {
-            title: '执照专业',
-            key: 'major',
-            dataIndex: 'major',
+            title: '发文单位',
+            key: 'unit',
+            dataIndex: 'unit',
         }, {
-            title: '岗位',
-            key: 'position',
-            dataIndex: 'position',
+            title: '发布日期',
+            key: 'releaseDate',
+            dataIndex: 'releaseDate',
+            render: (text) =>  ( text === null ? null : new Date(Number(text) * 1000).toLocaleDateString())
         }, {
-            title: '授权项目',
-            key: 'project',
-            dataIndex: 'project',
+            title: '完成时限',
+            key: 'timeLimit',
+            dataIndex: 'timeLimit',
+            render: (text) =>  ( text === null ? null : new Date(Number(text) * 1000).toLocaleDateString())
         }, {
-            title: '评估日期',
-            key: 'evaluationDate',
-            dataIndex: 'evaluationDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
-        }, {
-            title: '授权日期',
-            key: 'authDate',
-            dataIndex: 'authDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
-        },{
-            title: '到期日期',
-            key: 'expiredDate',
-            dataIndex: 'expiredDate',
-            render: (text) =>  (new Date(Number(text) * 1000).toLocaleDateString())
-        },{
-            title: '剩余天数',
-            key: 'userId',
-            dataIndex: 'expiredDate',
-            render: (text) => Math.floor((text - (Math.floor(Date.now() /1000))) /24 /3600 )
-        }, {
-            title: '持续评估日期1',
-            key: 'evaluationDate1',
-            dataIndex: 'evaluationDate1',
-            render: (text) =>  (text ? new Date(Number(text) * 1000).toLocaleDateString() : null)
-        }, {
-            title: '持续授权日期1',
-            key: 'authDate1',
-            dataIndex: 'authDate1',
-            render: (text) =>  (text ? new Date(Number(text) * 1000).toLocaleDateString() : null)
-        }, {
-            title: '持续评估日期2',
-            key: 'evaluationDate2',
-            dataIndex: 'evaluationDate2',
-            render: (text) =>  (text ? new Date(Number(text) * 1000).toLocaleDateString() : null)
-        }, {
-            title: '持续授权日期2',
-            key: 'authDate2',
-            dataIndex: 'authDate2',
-            render: (text) =>  (text ? new Date(Number(text) * 1000).toLocaleDateString() : null)
-        }, {
-            title: '参加维修工作时间',
-            key: 'participationWorkDate',
-            dataIndex: 'participationWorkDate'
+            title: '处理单位',
+            key: 'processingUnit',
+            dataIndex: 'processingUnit'
         }, {
             title: "操作",
             render: (text, record) => (<Button onClick={
@@ -474,7 +372,7 @@ class Authorization extends React.Component {
                     this.handleModalVisible(true);
                 }}
             >
-                编辑<Icon type="edit" /></Button>)
+                详情<Icon type="edit" /></Button>)
 
         }];
 
@@ -500,14 +398,16 @@ class Authorization extends React.Component {
                 <div style={{marginBottom: 10}}>
                     <Button onClick={() => {
                         this.handleManage({
-                            evaluationDate: moment.unix(Date.now() / 1000000),
-                            authDate: moment.unix(Date.now() / 1000000),
-                            expiredDate: moment.unix(Date.now() / 1000000),
+                            timeLimit: null,
+                            releaseDate: moment.unix(Date.now() / 1000000),
+                            receivedDate: moment.unix(Date.now() / 1000000),
+                            finishDate: null
                         });
                         this.setState({create: true});
                         this.handleModalVisible(true);
                     }}>新建</Button>&nbsp;&nbsp;
                     <Button
+                        disabled
                         onClick={() => {
                             message.info("管理员限制，此版本不可用🚫");
                         }}
@@ -515,6 +415,7 @@ class Authorization extends React.Component {
                         导入
                     </Button>&nbsp;&nbsp;
                     <Button
+                        disabled
                         onClick={() => {
                             // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
                             message.info("管理员限制，此版本不可用🚫");
@@ -536,7 +437,7 @@ class Authorization extends React.Component {
                         placeholder="请输入搜索内容"
                         onSearch={value => {
                             if(value !== '') {
-                                get(`user/authorization?keyword=${value}`).then(response => {
+                                get(`external/search?keyword=${value}`).then(response => {
                                     if(response.success) {
                                         this.setState({
                                             data: response.data,
@@ -555,7 +456,6 @@ class Authorization extends React.Component {
                 </div>
                 <CreateForm {...parentMethods} modalVisible={this.state.modalVisible} rowkey={record => record._id} value={this.state.value} create={this.state.create}/>
                 <Table
-                    scroll={{ x: 1600 }}
                     dataSource={this.state.data}
                     loading={this.state.isLoading}
                     columns={columns}
@@ -570,6 +470,6 @@ class Authorization extends React.Component {
             </Card>
         );
     }
-};
+}
 
 export default Authorization;

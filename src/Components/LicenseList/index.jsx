@@ -139,7 +139,7 @@ const CreateForm = Form.create()((props) => {
                             <Option value="PWT">PWT</Option>
                             <Option value="LGR">LGR</Option>
                             <Option value="MEC">MEC</Option>
-                            <Option value="AV">AVC</Option>
+                            <Option value="AVC">AVC</Option>
                             <Option value="ELC">ELC</Option>
                         </Select>
                     )}
@@ -405,7 +405,7 @@ class LicenseList extends React.Component {
                     }}>新建</Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            message.info("开发中...");
+                            message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导入

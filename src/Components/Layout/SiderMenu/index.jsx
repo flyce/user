@@ -149,7 +149,7 @@ class SiderMenu extends PureComponent {
                         </SubMenu>
                         <Menu.Item key="external">
                             <Icon type="hdd" />
-                            <span className="nav-text">外来文件管理</span>
+                            <span className="nav-text">外来文件管理&nbsp;&nbsp;<sup className="blink">new</sup></span>
                             <Link to={"external"}/>
                         </Menu.Item>
                         <Menu.Item key="timeline">
