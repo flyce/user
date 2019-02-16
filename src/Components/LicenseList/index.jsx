@@ -133,6 +133,14 @@ const CreateForm = Form.create()((props) => {
                             <Option value="AV">AV</Option>
                             <Option value="ME-TA">ME-TA</Option>
                             <Option value="ME-PA">ME-PA</Option>
+                            <Option value="ME-TH">ME-TH</Option>
+                            <Option value="ME-PH">ME-PH</Option>
+                            <Option value="STR">STR</Option>
+                            <Option value="PWT">PWT</Option>
+                            <Option value="LGR">LGR</Option>
+                            <Option value="MEC">MEC</Option>
+                            <Option value="AV">AVC</Option>
+                            <Option value="ELC">ELC</Option>
                         </Select>
                     )}
                 </FormItem>
