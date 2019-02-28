@@ -546,7 +546,7 @@ class EltInfo extends React.Component {
             title: '注册号',
             key: 'registration',
             render: (text) => ("B-" + text.registration),
-            sorter: (a, b) => a.registration > b.registration,
+            sorter: (a, b) => a.registration - b.registration,
             defaultSortOrder: 'ascend'
         }, {
             title: '机型',

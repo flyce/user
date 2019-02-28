@@ -85,6 +85,13 @@ class CadQuery extends React.Component {
         }, {
             title: '生效日期',
             dataIndex: 'effectiveDate',
+            render: (text) => {
+                if(text.match('/')) {
+                    return text.replace(/\//g, '-')
+                } else {
+                    return text;
+                }
+            },
             sorter: (a, b) => a.effectiveDate - b.effectiveDate,
         }];
         return (
