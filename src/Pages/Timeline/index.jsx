@@ -39,12 +39,13 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员执照管理功能 导入导出还有问题需要解决 2018-11-4</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加人员授权管理功能 2018-11-18</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>添加适航指令查询功能 2018-11-20</Timeline.Item>
-                <Timeline.Item color="red" dot={<Icon type="frown" style={{ fontSize: '16px' }} />}>前段时间电脑发生了故障，由于没push 我们丢失了一个月的进度 2018-1-10</Timeline.Item>
-                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复CAD/局方文件仅可以查询部分字段的bug<br/>添加了不炫酷的动画（ps:我不会写炫酷的，所以是不炫酷的） 2018-1-11</Timeline.Item>
-                <Timeline.Item color="green">修复bug<br/>优化搜索功能为多字段查询 2018-1-15</Timeline.Item>
-                <Timeline.Item color="green">搜索功能优化 2018-1-27</Timeline.Item>
-                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化页面 开发CAD导出功能 开发外来文件查询功能(后台部分) 增加多终端登陆功能 2018-2-14</Timeline.Item>
-                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化人员执照管理 人员授权管理页面<br /> 开发外来文件查询功能(前端部分) 2018-2-16</Timeline.Item>
+                <Timeline.Item color="red" dot={<Icon type="frown" style={{ fontSize: '16px' }} />}>前段时间电脑发生了故障，由于没push 我们丢失了一个月的进度 2019-1-10</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复CAD/局方文件仅可以查询部分字段的bug<br/>添加了不炫酷的动画（ps:我不会写炫酷的，所以是不炫酷的） 2019-1-11</Timeline.Item>
+                <Timeline.Item color="green">修复bug<br/>优化搜索功能为多字段查询 2019-1-15</Timeline.Item>
+                <Timeline.Item color="green">搜索功能优化 2019-1-27</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化页面 开发CAD导出功能 开发外来文件查询功能(后台部分) 增加多终端登陆功能 2019-2-14</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化人员执照管理 人员授权管理页面<br /> 开发外来文件查询功能(前端部分) 2019-2-16</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化外来文件管理页面布局<br /> 修复适航指令查询存在的bug<br />目前搜索不能回到第1页的bug尚未修复 2019-2-20</Timeline.Item>
             </Timeline>
         </Card>
     </div>

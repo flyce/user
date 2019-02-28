@@ -5,16 +5,15 @@ import './style.css';
 
 const content = (
     <div className="like">
-        <div>
-             <img alt="alipay" src="https://store.flyce.cn/alipay.png" height="100px" />
-             <span>支付宝</span>
-        </div>
-
-
-         <div>
-             <img alt="wechat" src="https://store.flyce.cn/wechat.png" height="100px" />
-             <span>微信</span>
-         </div>
+        {/*<div>*/}
+             {/*<img alt="alipay" src="https://store.flyce.cn/alipay.png" height="100px" />*/}
+             {/*<span>支付宝</span>*/}
+        {/*</div>*/}
+        {/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/}
+         {/*<div>*/}
+             {/*<img alt="wechat" src="https://store.flyce.cn/wechat.png" height="100px" />*/}
+             {/*<span>微信</span>*/}
+         {/*</div>*/}
     </div>
 );
 

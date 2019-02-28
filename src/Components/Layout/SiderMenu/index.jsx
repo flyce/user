@@ -125,12 +125,12 @@ class SiderMenu extends PureComponent {
                             <span className="nav-text">人员授权管理&nbsp;&nbsp;<sup className="blink">new</sup></span>
                             <Link to={"authorization"}/>
                         </Menu.Item>
-                        <SubMenu key="jufang" title={<span><Icon type="rocket" /><span>局方文件</span></span>}>
-                            <Menu.Item key="document">
-                                <Icon type="file-pdf" />
-                                <span className="nav-text">局方文件查询</span>
-                                <Link to={"document"}/>
-                            </Menu.Item>
+                        <SubMenu key="jufang" title={<span><Icon type="rocket" /><span>适航指令</span></span>}>
+                            {/*<Menu.Item key="document">*/}
+                                {/*<Icon type="file-pdf" />*/}
+                                {/*<span className="nav-text">局方文件查询</span>*/}
+                                {/*<Link to={"document"}/>*/}
+                            {/*</Menu.Item>*/}
                             <Menu.Item key="cadquery">
                                 <Icon type="book" />
                                 <span className="nav-text">适航指令查询</span>

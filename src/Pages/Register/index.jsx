@@ -96,7 +96,7 @@ class NRegisterForm extends Component {
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('phone', {
-                            rules: [{ required: true, message: 'Please input your phone number!' }],
+                            rules: [{ required: true, pattern: '0?(13|14|15|17|18|19)[0-9]{9}', message: 'The input is not valid phone number!' }],
                         })(
                             <Input prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="手机" />
                         )}

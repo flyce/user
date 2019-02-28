@@ -93,7 +93,7 @@ class NLoginForm extends Component {
                                 message: '重要通知',
                                 duration: 15,
                                 description: '适航辅助管理系统现处于公测期间，所有模块免费向全部用户提供！',
-                                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+                                icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
                             });
                         }
                     } else {

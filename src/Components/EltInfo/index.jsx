@@ -33,7 +33,7 @@ const CreateForm = Form.create()((props) => {
             onCancel={() => handleModalVisible()}
             width="80%"
             footer={[
-                <Popconfirm title="确定删除?" onConfirm={() => {handleDelete({_id: value._id})}} okText="确定" cancelText="取消">
+                <Popconfirm key={value._id} title="确定删除?" onConfirm={() => {handleDelete({_id: value._id})}} okText="确定" cancelText="取消">
                     <Button key="reset" type="danger" ghost>
                         删除
                     </Button>
@@ -94,8 +94,27 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="设备型号"
+                    label="编码方式"
                     className="item"
+                    hasFeedback
+                >
+                    {form.getFieldDecorator('encode', {
+                        rules: [{
+                            type: 'string', message: '请选择编码方式',
+                        }],
+                        initialValue: value.encode
+                    })(
+                        <Select placeholder="请选择编码方式">
+                            <Option value="000">序列号</Option>
+                            <Option value="001">经营机构和序列号</Option>
+                            <Option value="011">注册号</Option>
+                        </Select>
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="设备型号"
+                    className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('equipment', {
@@ -125,7 +144,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="类型"
-                    className="item offset"
+                    className="item"
                     hasFeedback
                 >
                     {form.getFieldDecorator('type', {
@@ -143,7 +162,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="ELT编码协议"
-                    className="item"
+                    className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('protocol', {
@@ -173,7 +192,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="电池有效期"
-                    className="item offset"
+                    className="item"
                 >
                     {form.getFieldDecorator('effectiveDate', {
                         rules: [{
@@ -187,7 +206,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="发射类型"
-                    className="item"
+                    className="item offset"
                     hasFeedback
                 >
                     {form.getFieldDecorator('txType', {
@@ -378,6 +397,18 @@ class EltInfo extends React.Component {
             title: '制造商',
             dataIndex: 'manufacturer',
             key: 'manufacturer',
+        }, {
+            title: '编码方式',
+            dataIndex: 'encode',
+            render: (text) => {
+                let info;
+                switch (text) {
+                    case '000': info  = '序列号'; break;
+                    case '001': info = '经营机构和序列号'; break;
+                    default: info = '注册号';
+                }
+                return info;
+            }
         }, {
             title: '有效期',
             dataIndex: 'effectiveDate',

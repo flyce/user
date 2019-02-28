@@ -27,7 +27,6 @@ class UserInfoModify extends React.Component {
         }, 2000);
     };
     handleCancel = () => {
-        console.log('Clicked cancel button');
         this.setState({
             visible: false,
         });

@@ -1,25 +1,54 @@
 import React from 'react';
-import { Table, Input, message, Button } from 'antd';
+import { Table, Input, message, Button, Card } from 'antd';
 import { get, downloadFile } from '../../Utils/fetch';
 
 const Search = Input.Search;
 const InputGroup = Input.Group;
 
-class CadQuery extends React.PureComponent {
+class CadQuery extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            data: []
+            data: [],
+            count: 0,
+            defaultCurrent: 1,
+            keyword: null,
+            loading: true
         })
     }
     componentDidMount() {
         get('user/cad').then(res => {
             this.setState({
                 data: res.docs,
-                keyword: ''
+                keyword: '',
+                loading: false
             });
+            console.log( res.docs);
+        });
+        get('user/count?db=cad').then(res => {
+            if(res.success) {
+                this.setState({
+                    count: res.count
+                });
+            } else {
+                message.error(res.info);
+            }
         });
     }
+
+    onChange = (page) => {
+        const url = this.state.keyword ? `user/cad/search?keyword=${this.state.keyword}&limit=15&skip=` : 'user/cad?limit=15&skip=';
+        get(url + (page - 1)).then((res) => {
+            if(res.success) {
+                this.setState({
+                    data: res.docs,
+                    defaultCurrent: page,
+                });
+            } else {
+                message.error(res.info);
+            }
+        });
+    };
 
     render() {
         const { data } = this.state;
@@ -59,19 +88,29 @@ class CadQuery extends React.PureComponent {
             sorter: (a, b) => a.effectiveDate - b.effectiveDate,
         }];
         return (
-            <div>
+            <Card>
                 <div style={{display: "flex", flexDirection: "row", width: "100%"}}>
                     <InputGroup compact>
                         <Search
                             placeholder="输入关键词来查询"
                             onSearch={value => {
+                                this.setState({
+                                    loading: true
+                                });
                                 if(value.length === 0) {
                                     message.error("请输入内容后再搜索");
                                 } else {
                                     get(`user/cad/search?keyword=${value}`).then(res => {
                                         this.setState({
                                             data: res.docs,
-                                            keyword: value
+                                            keyword: value,
+                                            loading: false
+                                        });
+                                    });
+                                    get(`user/cad/search/count?keyword=${value}`).then(res => {
+                                        this.setState({
+                                            count: res.docs,
+                                            defaultCurrent: 1,
                                         });
                                     })
                                 }
@@ -91,17 +130,22 @@ class CadQuery extends React.PureComponent {
                         }
                     }}>导出</Button>
                 </div>
-
                 <Table
                     columns={columns}
                     dataSource={data}
                     scroll={{ x: 1500 }}
                     size="small"
+                    loading={this.state.loading}
                     rowKey={record => record._id}
                     style={{marginTop: '20px'}}
-                    pagination={false}
+                    pagination={{
+                        defaultCurrent: this.state.defaultCurrent,
+                        total: this.state.count,
+                        onChange:this.onChange,
+                        defaultPageSize: 15
+                    }}
                 />
-            </div>
+            </Card>
         );
     }
 }

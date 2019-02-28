@@ -34,7 +34,7 @@ class PersonalCenter extends React.PureComponent {
         get('user/info').then(
             res => {
                 if(res.success) {
-                    const { username, name, company, position, phone, mail } = res;
+                    const { username, name, company, position, phone, mail } = res.data;
                     this.setState({
                         username,
                         name,

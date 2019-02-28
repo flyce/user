@@ -53,7 +53,7 @@ const CreateForm = Form.create()((props) => {
             确定
         </Button>,
     ] : [
-        <Popconfirm title="确定删除?" onConfirm={() => {handleDelete(value._id)}} okText="确定" cancelText="取消">
+        <Popconfirm key={value._id} title="确定删除?" onConfirm={() => {handleDelete(value._id)}} okText="确定" cancelText="取消">
             <Button key="reset" type="danger" ghost>
                 删除
             </Button>

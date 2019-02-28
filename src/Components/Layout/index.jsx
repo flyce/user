@@ -56,7 +56,7 @@ class BasicLayout extends React.Component {
                             // ]}
                             copyright={
                                 <Fragment>
-                                    Copyright <Icon type="copyright" /> 2018 鸢尾工作室
+                                    Copyright <Icon type="copyright" /> 2019 鸢尾工作室
                                 </Fragment>
                             }
                         />

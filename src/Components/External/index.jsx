@@ -7,6 +7,7 @@ import moment from 'moment';
 import { get, post } from '../../Utils/fetch';
 
 const Search = Input.Search;
+const { TextArea } = Input;
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -17,7 +18,6 @@ const CreateForm = Form.create()((props) => {
     const { modalVisible, form, handleModalVisible, value, handleUpdate, handleDelete, create, handleInit } = props;
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
-            console.log(Math.floor(new Date(fieldsValue.releaseDate._d).getTime() / 1000), fieldsValue.receivedDate._d);
             fieldsValue.releaseDate = Math.floor(new Date(fieldsValue.releaseDate._d).getTime() / 1000);
             fieldsValue.receivedDate = Math.floor(new Date(fieldsValue.receivedDate._d).getTime() / 1000);
             fieldsValue.finishDate = fieldsValue.finishDate ? Math.floor(new Date(fieldsValue.finishDate._d).getTime() / 1000) : null;
@@ -47,7 +47,7 @@ const CreateForm = Form.create()((props) => {
             确定
         </Button>,
     ] : [
-        <Popconfirm title="确定删除?" onConfirm={() => {handleDelete(value._id)}} okText="确定" cancelText="取消">
+        <Popconfirm key={value._id} title="确定删除?" onConfirm={() => {handleDelete(value._id)}} okText="确定" cancelText="取消">
             <Button key="reset" type="danger" ghost>
                 删除
             </Button>
@@ -118,39 +118,8 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="相关要求"
-                    className="item"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('requirement', {
-                        rules: [{
-                            type: 'string', message: '请输入相关要求',
-                        }],
-                        initialValue: value.requirement
-                    })(
-                        <Input placeholder="请输入相关要求"/>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="完成时限"
-                    className="item offset"
-                    hasFeedback
-                >
-                    {form.getFieldDecorator('timeLimit', {
-                        rules: [{
-                            type: 'object',
-                            message: '请输入完成时限',
-                        }],
-                        initialValue: value.timeLimit === null ? null : moment.unix(value.timeLimit)
-                    })(
-                        <DatePicker placeholder="请选择发布日期" style={{ width: '100%' }} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
                     label="发布日期"
-                    className="item offset"
+                    className="item"
                 >
                     {form.getFieldDecorator('releaseDate', {
                         rules: [{
@@ -164,7 +133,7 @@ const CreateForm = Form.create()((props) => {
                 <FormItem
                     {...formItemLayout}
                     label="接收日期"
-                    className="item"
+                    className="item offset"
                 >
                     {form.getFieldDecorator('receivedDate', {
                         rules: [{
@@ -191,22 +160,24 @@ const CreateForm = Form.create()((props) => {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="处理措施"
-                    className="item offset"
+                    label="完成时限"
+                    className="item"
+                    hasFeedback
                 >
-                    {form.getFieldDecorator('treatment', {
+                    {form.getFieldDecorator('timeLimit', {
                         rules: [{
-                            required: false, type: 'string', message: '请输入处理措施',
+                            type: 'object',
+                            message: '请输入完成时限',
                         }],
-                        initialValue: value.treatment
+                        initialValue: value.timeLimit === null ? null : moment.unix(value.timeLimit)
                     })(
-                        <Input placeholder="请输入处理措施"/>
+                        <DatePicker placeholder="请选择发布日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="完成日期"
-                    className="item"
+                    className="item offset"
                 >
                     {form.getFieldDecorator('finishDate', {
                         rules: [{
@@ -218,18 +189,34 @@ const CreateForm = Form.create()((props) => {
                         <DatePicker placeholder="请选择完成日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
+                <FormItem {...formItemLayout} className="item offset"/>
                 <FormItem
                     {...formItemLayout}
-                    label="上传FTP"
+                    label="相关要求"
+                    className="item"
+                    hasFeedback
+                >
+                    {form.getFieldDecorator('requirement', {
+                        rules: [{
+                            type: 'string', message: '请输入相关要求',
+                        }],
+                        initialValue: value.requirement
+                    })(
+                        <TextArea rows={4} placeholder="请输入相关要求"/>
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="处理措施"
                     className="item offset"
                 >
-                    {form.getFieldDecorator('upload', {
+                    {form.getFieldDecorator('treatment', {
                         rules: [{
-                            required: false, type: 'string', message: '上传FTP',
+                            required: false, type: 'string', message: '请输入处理措施',
                         }],
-                        initialValue: value.upload
+                        initialValue: value.treatment
                     })(
-                        <Input placeholder="请输入处理措施"/>
+                        <TextArea rows={4} placeholder="请输入处理措施"/>
                     )}
                 </FormItem>
             </Form>
@@ -406,23 +393,23 @@ class Authorization extends React.Component {
                         this.setState({create: true});
                         this.handleModalVisible(true);
                     }}>新建</Button>&nbsp;&nbsp;
-                    <Button
-                        disabled
-                        onClick={() => {
-                            message.info("管理员限制，此版本不可用🚫");
-                        }}
-                    >
-                        导入
-                    </Button>&nbsp;&nbsp;
-                    <Button
-                        disabled
-                        onClick={() => {
-                            // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                            message.info("管理员限制，此版本不可用🚫");
-                        }}
-                    >
-                        导出
-                    </Button>&nbsp;&nbsp;
+                    {/*<Button*/}
+                        {/*disabled*/}
+                        {/*onClick={() => {*/}
+                            {/*message.info("管理员限制，此版本不可用🚫");*/}
+                        {/*}}*/}
+                    {/*>*/}
+                        {/*导入*/}
+                    {/*</Button>&nbsp;&nbsp;*/}
+                    {/*<Button*/}
+                        {/*disabled*/}
+                        {/*onClick={() => {*/}
+                            {/*// downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());*/}
+                            {/*message.info("管理员限制，此版本不可用🚫");*/}
+                        {/*}}*/}
+                    {/*>*/}
+                        {/*导出*/}
+                    {/*</Button>&nbsp;&nbsp;*/}
                     <Button
                         ghost
                         type="danger"
