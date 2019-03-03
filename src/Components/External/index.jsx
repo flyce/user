@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm } from 'antd';
+import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Popconfirm, Upload } from 'antd';
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
@@ -57,6 +57,25 @@ const CreateForm = Form.create()((props) => {
             确定
         </Button>,
     ];
+
+    const uploadProps = {
+        name: 'file',
+        action: '//jsonplaceholder.typicode.com/posts/',
+        headers: {
+            authorization: 'authorization-text',
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+
 
     return (
         <Modal
@@ -189,7 +208,13 @@ const CreateForm = Form.create()((props) => {
                         <DatePicker placeholder="请选择完成日期" style={{ width: '100%' }} />
                     )}
                 </FormItem>
-                <FormItem {...formItemLayout} className="item offset"/>
+                <FormItem {...formItemLayout} className="item offset"  label="附件(管理员禁用，本地版可打开)">
+                    <Upload {...uploadProps} disabled >
+                        <Button disabled>
+                            <Icon type="upload" /> Click to Upload
+                        </Button>
+                    </Upload>
+                </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="相关要求"

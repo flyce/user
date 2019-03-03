@@ -202,7 +202,7 @@ class SubscribeManage extends React.PureComponent {
                         </Row>
                         <Row>
                             <p>
-                                <span>CAAC 信息订阅:<sub><a href="http://www.caac.gov.cn/XXGK/XXGK/index_172.html?fl=13" target="_blank" rel="noopener noreferrer">中国民用航空局政府信息公开</a></sub></span>
+                                <span>CAAC 信息订阅:<sub><a href="http://www.caac.gov.cn/XXGK/XXGK/index_172.html?fl=13" target="_blank" rel="noopener noreferrer">中国民用航空局政府信息公开</a>(注：测试阶段，服务存在不稳定的情况)</sub></span>
                                 <span>
                                     <Switch
                                         checked={aviationInfo}
@@ -295,6 +295,6 @@ class SubscribeManage extends React.PureComponent {
             </Card>
         );
     }
-};
+}
 
 export default SubscribeManage;

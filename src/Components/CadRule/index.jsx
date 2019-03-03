@@ -218,6 +218,6 @@ class CadRule extends Component {
             </div>
         );
     }
-};
+}
 
 export default CadRule;

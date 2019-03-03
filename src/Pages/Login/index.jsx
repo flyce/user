@@ -34,7 +34,7 @@ class NLoginForm extends Component {
             // if (admin) {
             //     history.push("admin/user");
             // } else {
-                history.push("dashboard/center")
+                history.push("dashboard/disclaimer")
             // }
         }
     }
@@ -88,7 +88,7 @@ class NLoginForm extends Component {
                         setItem("loginTime", Math.floor(Date.now()/1000));
                         const token = getItem("token");
                         if (token.length > 0) {
-                            history.push("dashboard/center");
+                            history.push("dashboard/disclaimer");
                             notification.open({
                                 message: '重要通知',
                                 duration: 15,

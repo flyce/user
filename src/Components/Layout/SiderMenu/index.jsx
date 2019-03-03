@@ -154,7 +154,7 @@ class SiderMenu extends PureComponent {
                         </Menu.Item>
                         <Menu.Item key="timeline">
                             <Icon type="exception" />
-                            <span className="nav-text">开发日志 V2.1</span>
+                            <span className="nav-text">开发日志 V2.5</span>
                             <Link to={"timeline"}/>
                         </Menu.Item>
                     </Menu>

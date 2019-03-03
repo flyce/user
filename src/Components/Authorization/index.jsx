@@ -588,6 +588,6 @@ class Authorization extends React.Component {
             </Card>
         );
     }
-};
+}
 
 export default Authorization;

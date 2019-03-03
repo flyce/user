@@ -46,6 +46,11 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化页面 开发CAD导出功能 开发外来文件查询功能(后台部分) 增加多终端登陆功能 2019-2-14</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化人员执照管理 人员授权管理页面<br /> 开发外来文件查询功能(前端部分) 2019-2-16</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>优化外来文件管理页面布局<br /> 修复适航指令查询存在的bug<br />目前搜索不能回到第1页的bug尚未修复 2019-2-20</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>新增CAD查询页分页功能 2019-2-21</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复bug，优化cad搜索，ELT模块添加"编码方式"，注册页面添加手机号判断（限定为仅手机号可注册） 2019-2-28</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>编写提醒短信功能 2019-3-2</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>上线前测试，优化后台逻辑 2019-3-3</Timeline.Item>
+                <Timeline.Item dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }}/>} color="red">发布<strong>鸢尾适航管理辅助系统</strong> 2.5.0版本</Timeline.Item>
             </Timeline>
         </Card>
     </div>

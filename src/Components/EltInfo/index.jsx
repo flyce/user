@@ -500,6 +500,6 @@ class EltInfo extends React.Component {
             </Card>
         );
     }
-};
+}
 
 export default EltInfo;
