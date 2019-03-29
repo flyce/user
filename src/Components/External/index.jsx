@@ -35,6 +35,7 @@ const CreateForm = Form.create()((props) => {
                 });
             } else {
                 handleUpdate({_id: value._id, ...fieldsValue});
+                handleInit();
             }
             handleModalVisible();
         });
@@ -115,7 +116,7 @@ const CreateForm = Form.create()((props) => {
                         rules: [{
                             required: true, message: '请输入标题',
                         }],
-                        initialValue: value.unit
+                        initialValue: value.title
                     })(
                         <Input placeholder="请输入标题"/>
                     )}

@@ -51,6 +51,7 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>编写提醒短信功能 2019-3-2</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>上线前测试，优化后台逻辑 2019-3-3</Timeline.Item>
                 <Timeline.Item dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }}/>} color="red">发布<strong>鸢尾适航管理辅助系统</strong> 2.5.0版本</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复外来文件存在的bug 2019-3-29</Timeline.Item>
             </Timeline>
         </Card>
     </div>
