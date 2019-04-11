@@ -52,6 +52,7 @@ const Time = () => (
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>上线前测试，优化后台逻辑 2019-3-3</Timeline.Item>
                 <Timeline.Item dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }}/>} color="red">发布<strong>鸢尾适航管理辅助系统</strong> 2.5.0版本</Timeline.Item>
                 <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复外来文件存在的bug 2019-3-29</Timeline.Item>
+                <Timeline.Item dot={<Icon type="edit" style={{ fontSize: '16px' }} />}>修复外来文件修改异常和多选删除的bug 修复CAD双周刊抓取故障的bug 2019-4-11</Timeline.Item>
             </Timeline>
         </Card>
     </div>

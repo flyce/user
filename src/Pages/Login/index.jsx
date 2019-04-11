@@ -23,7 +23,6 @@ class NLoginForm extends Component {
 
     componentDidMount() {
         const loginTime = getItem("loginTime");
-        // const admin = getItem("admin");
 
         if (Math.floor(Date.now()/1000) - loginTime > config.loginEffect) {
             removeItem("token");
@@ -31,11 +30,8 @@ class NLoginForm extends Component {
             removeItem("_id");
             removeItem("loginTime");
         } else {
-            // if (admin) {
-            //     history.push("admin/user");
-            // } else {
-                history.push("dashboard/disclaimer")
-            // }
+            history.push("dashboard/disclaimer")
+
         }
     }
 

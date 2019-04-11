@@ -4,7 +4,7 @@ import { Card, Row } from 'antd';
 const Disclaimer = () => (
     <Card>
         <Row className="info"><h2>免责申明</h2></Row>
-        感谢您选择“鸢尾适航管理辅助系统”平台，本声明包含本网站网络使用的有关条款。
+            感谢您选择 <b>鸢尾维修信息平台</b>，本声明包含本网站网络使用的有关条款。
         <br /><br />
         <strong>凡浏览并使用本网站及相关网页的用户，均视为已明示表示接受以下条款：</strong>
         <br /><br />

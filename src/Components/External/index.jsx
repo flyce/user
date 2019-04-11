@@ -25,6 +25,7 @@ const CreateForm = Form.create()((props) => {
             if (err) return;
             form.resetFields();
             if(create) {
+                console.log(fieldsValue);
                 post('external', fieldsValue).then(response => {
                     if(response.success) {
                         message.info("创建成功");
@@ -34,6 +35,7 @@ const CreateForm = Form.create()((props) => {
                     }
                 });
             } else {
+                console.log({_id: value._id, ...fieldsValue});
                 handleUpdate({_id: value._id, ...fieldsValue});
                 handleInit();
             }
