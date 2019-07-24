@@ -28,7 +28,6 @@ class SubscribeManage extends React.PureComponent {
                         license,
                         auth,
                         external } = response.data[0];
-                    console.log(response.data[0]);
                     this.setState({
                         loading: false,
                         subscribeExpireTime,

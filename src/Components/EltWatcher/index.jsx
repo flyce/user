@@ -146,8 +146,11 @@ class Radio extends React.PureComponent {
         const operations = <Button
             size="small"
             onClick={() => {
-                let date = this.state.activeKey === '1' ? 15 : this.state.activeKey === '2' ? 30 : this.state.activeKey === '3' ? 60 : this.state.date;
-                let note = this.state.activeKey === '1' ? "15_days" : this.state.activeKey === '2' ? "30_days" : this.state.activeKey === '3' ? "60_days" : "customer";
+                console.log(this.state.activeKey);
+                let { activeKey } = this.state;
+                let activeKeyIndex = Number(activeKey);
+                let date = activeKeyIndex === 1 ? 15 : activeKeyIndex === 2 ? 30 : activeKeyIndex === 3 ? 60 : this.state.date;
+                let note = activeKeyIndex === 1 ? "15_days" : activeKeyIndex === 2 ? "30_days" : activeKeyIndex === 3 ? "60_days" : "customer";
                 downloadFile("user/export/radio?date=" + date, "Radio_List_Expires_in_" + note + "_" + new Date().toLocaleDateString());
                 message.info("导出中，请稍后！");
             }}

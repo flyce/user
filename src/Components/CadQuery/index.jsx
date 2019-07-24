@@ -23,7 +23,6 @@ class CadQuery extends React.Component {
                 keyword: '',
                 loading: false
             });
-            console.log( res.docs);
         });
         get('user/count?db=cad').then(res => {
             if(res.success) {

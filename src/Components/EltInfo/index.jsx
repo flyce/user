@@ -17,7 +17,6 @@ const CreateForm = Form.create()((props) => {
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
             fieldsValue.effectiveDate = Math.floor(new Date(fieldsValue.effectiveDate._d).getTime() / 1000);
-            console.log(fieldsValue);
             if (err) return;
             form.resetFields();
             handleUpdate({_id: value._id, ...fieldsValue});
