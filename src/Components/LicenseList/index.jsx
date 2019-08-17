@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Pop
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import { get, post } from '../../Utils/fetch';
+import { get, post, downloadFile } from '../../Utils/fetch';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -127,7 +127,7 @@ const CreateForm = Form.create()((props) => {
                     })(
                         <Select
                             showSearch
-                            placeholder="请输入执照签署"
+                            placeholder="请选择执照类型"
                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
                             <Option value="AV">AV</Option>
@@ -412,8 +412,8 @@ class LicenseList extends React.Component {
                     </Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                            message.info("管理员限制，此版本不可用🚫");
+                            downloadFile("user/export/license", "License_list_" + new Date().toLocaleDateString());
+                            // message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导出

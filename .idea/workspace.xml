@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="020d819d-d4ac-4968-9e96-5511ddb181ab" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Authorization/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Authorization/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/LicenseList/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/LicenseList/index.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,11 +26,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Components/Authorization/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="534" column="27" lean-forward="true" selection-start-line="534" selection-start-column="27" selection-end-line="534" selection-end-column="27" />
+            <state relative-caret-position="5616">
+              <caret line="555" column="35" lean-forward="true" selection-start-line="555" selection-start-column="35" selection-end-line="555" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Components/License/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-269">
+              <caret line="145" column="14" lean-forward="true" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Components/LicenseList/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -127,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/Components/Layout/SiderMenu/style.css" />
         <option value="$PROJECT_DIR$/src/Pages/User/index.jsx" />
         <option value="$PROJECT_DIR$/src/Utils/fetch.js" />
-        <option value="$PROJECT_DIR$/src/Components/LicenseList/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/UserInfoModify/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/PersonalCenter/index.jsx" />
         <option value="$PROJECT_DIR$/src/Pages/Register/index.jsx" />
@@ -150,6 +171,7 @@
         <option value="$PROJECT_DIR$/src/Config/env.js" />
         <option value="$PROJECT_DIR$/src/Components/EltWatcher/index.jsx" />
         <option value="$PROJECT_DIR$/src/Components/Authorization/index.jsx" />
+        <option value="$PROJECT_DIR$/src/Components/LicenseList/index.jsx" />
       </list>
     </option>
   </component>
@@ -191,7 +213,7 @@
               <item name="user" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Components" type="462c0819:PsiDirectoryNode" />
-              <item name="Authorization" type="462c0819:PsiDirectoryNode" />
+              <item name="LicenseList" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -357,12 +379,12 @@
       <workItem from="1562419065217" duration="959000" />
       <workItem from="1563940647355" duration="1359000" />
       <workItem from="1563960260271" duration="287000" />
-      <workItem from="1566025689437" duration="722000" />
+      <workItem from="1566025689437" duration="2505000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="407496000" />
+    <option name="totallyTimeSpent" value="409279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -381,7 +403,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32816902" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -490,23 +512,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
           <caret line="58" column="76" selection-start-line="58" selection-start-column="76" selection-end-line="58" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/License/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-766">
-          <caret line="134" column="11" lean-forward="true" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Components/LicenseList/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5476">
-          <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -766,8 +771,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Authorization/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="534" column="27" lean-forward="true" selection-start-line="534" selection-start-column="27" selection-end-line="534" selection-end-column="27" />
+        <state relative-caret-position="5616">
+          <caret line="555" column="35" lean-forward="true" selection-start-line="555" selection-start-column="35" selection-end-line="555" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/License/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-269">
+          <caret line="145" column="14" lean-forward="true" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Components/LicenseList/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="27" column="32" lean-forward="true" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

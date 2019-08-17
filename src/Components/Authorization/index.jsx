@@ -535,7 +535,6 @@ class Authorization extends React.Component {
                     <Button
                         onClick={() => {
                             downloadFile("user/export/authorization", "Authorization_list_" + new Date().toLocaleDateString());
-                            // message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导出
