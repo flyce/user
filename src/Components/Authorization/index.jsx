@@ -4,7 +4,7 @@ import { Card, Table, message, Icon, Form, Modal, Button, Input, DatePicker, Pop
 import LoginVerify from '../LoginVerify';
 import moment from 'moment';
 
-import { get, post } from '../../Utils/fetch';
+import { get, post, downloadFile } from '../../Utils/fetch';
 
 const Search = Input.Search;
 
@@ -534,8 +534,8 @@ class Authorization extends React.Component {
                     </Button>&nbsp;&nbsp;
                     <Button
                         onClick={() => {
-                            // downloadFile("user/export/aircraft", "Aircraft_list_" + new Date().toLocaleDateString());
-                            message.info("管理员限制，此版本不可用🚫");
+                            downloadFile("user/export/authorization", "Authorization_list_" + new Date().toLocaleDateString());
+                            // message.info("管理员限制，此版本不可用🚫");
                         }}
                     >
                         导出
